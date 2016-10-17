@@ -4,10 +4,8 @@
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
 # User-specific stuff:
-.idea/workspace.xml
 .idea/tasks.xml
 .idea/dictionaries
-.idea/vcs.xml
 .idea/jsLibraryMappings.xml
 
 # Sensitive or high-churn files:
@@ -20,7 +18,6 @@
 
 # Gradle:
 .idea/gradle.xml
-.idea/libraries
 
 # Mongo Explorer plugin:
 .idea/mongoSettings.xml
@@ -59,3 +56,4 @@ fabric.properties
 hs_err_pid*
 /NovaGamesLib-Bukkit.iml
 /.idea/
+/NovaGamesLib.iml
