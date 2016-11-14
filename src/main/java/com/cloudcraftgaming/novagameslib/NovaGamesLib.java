@@ -1,5 +1,6 @@
 package com.cloudcraftgaming.novagameslib;
 
+import com.cloudcraftgaming.novagameslib.utils.FileManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -18,6 +19,11 @@ public class NovaGamesLib extends JavaPlugin {
         plugin = this;
 
         //Do file things
+        FileManager.createConfigFile();
+
+        if (!FileManager.checkFileVersions()) {
+            return;
+        }
 
         //Register events and commands
 
