@@ -104,6 +104,10 @@ public class FileManager {
         return NovaGamesLib.plugin.getConfig().getString("Console.Verbose").equalsIgnoreCase("True");
     }
 
+    public static Boolean useMySQL() {
+        return plugin.getConfig().getString("Database.MySQL.Use").equalsIgnoreCase("True");
+    }
+
     /*
     public static void saveCustomConfig(FileConfiguration ymlConfig, File ymlFile) {
         try {
