@@ -48,9 +48,9 @@ public class FileManager {
             plugin.getConfig().addDefault("Stats.Track.Loses", true);
 
             plugin.getConfig().addDefault("Sign.Manage", true);
-            plugin.getConfig().addDefault("Sign.Permissions.Place", "OYAGames.Sign.place");
-            plugin.getConfig().addDefault("Sign.Permissions.Use", "OYAGames.Sign.Use");
-            plugin.getConfig().addDefault("Sign.Title", "[Minigames]");
+            plugin.getConfig().addDefault("Sign.Permissions.Place", "NovaGames.Sign.place");
+            plugin.getConfig().addDefault("Sign.Permissions.Use", "NovaGames.Sign.Use");
+            plugin.getConfig().addDefault("Sign.Title", "[Minigame]");
             plugin.getConfig().addDefault("Sign.Join", "Join");
             plugin.getConfig().addDefault("Sign.Quit", "Quit");
             plugin.getConfig().addDefault("Sign.Spectate", "Spectate");
