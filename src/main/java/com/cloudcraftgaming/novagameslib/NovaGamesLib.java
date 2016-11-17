@@ -34,6 +34,8 @@ public class NovaGamesLib extends JavaPlugin {
         //Do file things
         FileManager.createConfigFile();
         MessageManager.createMessageFile();
+        FileManager.createPluginCacheFile();
+        FileManager.createKitsFile();
 
         if (!FileManager.checkFileVersions()) {
             return;
@@ -132,6 +134,7 @@ public class NovaGamesLib extends JavaPlugin {
     }
 
     //Getters
+    @SuppressWarnings("unused")
     public DatabaseInfo getDatabaseInfo() {
         return databaseInfo;
     }

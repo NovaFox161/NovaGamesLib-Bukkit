@@ -1,8 +1,12 @@
 package com.cloudcraftgaming.novagameslib.utils;
 
 import com.cloudcraftgaming.novagameslib.NovaGamesLib;
+import org.bukkit.Material;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import static com.cloudcraftgaming.novagameslib.NovaGamesLib.plugin;
@@ -12,6 +16,7 @@ import static com.cloudcraftgaming.novagameslib.NovaGamesLib.plugin;
  * Website: www.cloudcraftgaming.com
  * For Project: NovaGamesLib
  */
+@SuppressWarnings("WeakerAccess, unused")
 public class FileManager {
     private static Double conVersion = 1.0;
     static Double msgVersion = 1.0;
@@ -84,6 +89,54 @@ public class FileManager {
         }
     }
 
+    public static void createPluginCacheFile() {
+        if (!getPluginCacheFile().exists()) {
+           NovaGamesLib.plugin.getLogger().info("Generating plugin cache file...");
+
+            YamlConfiguration cache = getPluginCacheYml();
+            cache.addDefault("DO NOT DELETE.A", "NovaGamesLib is developed and managed by Shades161 (NovaFox161)");
+            cache.addDefault("DO NOT DELETE.B", "This plugin is an API and is useless on its own!");
+            cache.addDefault("ArenaAmount", 0);
+            cache.addDefault("NextId", 1);
+
+            cache.options().copyDefaults(true);
+            savePluginCache(cache);
+
+            cache.options().copyDefaults(true);
+            savePluginCache(cache);
+        }
+    }
+
+    /**
+     * Creates a default yml file for kits if one does not exist.
+     * This should only be used by NovaGamesLib on enable.
+     */
+    public static void createKitsFile() {
+        if (!getKitsFile().exists()) {
+            NovaGamesLib.plugin.getLogger().info("Generating kits.yml...");
+            YamlConfiguration kits = getKitsYml();
+
+            kits.addDefault("DO NOT DELETE.A", "NovaGamesLib is developed and managed by Shades161 (NovaFox161)");
+            kits.addDefault("DO NOT DELETE.B", "This plugin is an API and is useless on its own!");
+
+            //Create an example kit.
+            List<String> exampleKit = kits.getStringList("Kits.Example.Items.List");
+            exampleKit.add(Material.STICK.name());
+            exampleKit.add(Material.MUSHROOM_SOUP.name());
+            exampleKit.add(Material.WOOD_SWORD.name());
+            kits.set("Kits.Example.Items.List", exampleKit);
+            kits.addDefault("Kits.Example.Items." + Material.STICK.name() + ".Amount", 1);
+            kits.addDefault("Kits.Example.Items." + Material.MUSHROOM_SOUP.name() + ".Amount", 3);
+            kits.addDefault("Kits.Example.Items." + Material.WOOD_SWORD.name() + ".Amount", 1);
+
+            kits.options().copyDefaults(true);
+            saveKitFile(kits);
+
+            kits.options().copyDefaults(true);
+            saveKitFile(kits);
+        }
+    }
+
     public static boolean checkFileVersions() {
         if (!(plugin.getConfig().getDouble("Config Version") == conVersion)) {
             plugin.getLogger().severe("Config.yml outdated! Copy your settings, delete the file and restart the server!");
@@ -108,7 +161,40 @@ public class FileManager {
         return plugin.getConfig().getString("Database.MySQL.Use").equalsIgnoreCase("True");
     }
 
-    /*
+    //Getters
+    /**
+     * Gets the plugin.yml file in the /Cache/ folder.
+     * @return The plugin cache file.
+     */
+    public static File getPluginCacheFile() {
+        return new File(NovaGamesLib.plugin.getDataFolder() + "/Cache/plugin.yml");
+    }
+
+    /**
+     * Gets the plugin cache file as a YML file.
+     * @return the plugin cache yml.
+     */
+    public static YamlConfiguration getPluginCacheYml() {
+        return YamlConfiguration.loadConfiguration(getPluginCacheFile());
+    }
+
+    /**
+     * Gets the kits.yml in the /Kits/ folder.
+     * @return The kits file.
+     */
+    public static File getKitsFile() {
+        return new File(NovaGamesLib.plugin.getDataFolder() + "/Kits/kits.yml");
+    }
+
+    /**
+     * Gets the kits file as a YML file.
+     * @return the kits yml.
+     */
+    public static YamlConfiguration getKitsYml() {
+        return YamlConfiguration.loadConfiguration(getKitsFile());
+    }
+
+    //Savers
     public static void saveCustomConfig(FileConfiguration ymlConfig, File ymlFile) {
         try {
             ymlConfig.save(ymlFile);
@@ -116,5 +202,28 @@ public class FileManager {
             e.printStackTrace();
         }
     }
-    */
+
+    /**
+     * Saves the plugin cache.
+     * @param cache The instance of the cache to save.
+     */
+    public static void savePluginCache(YamlConfiguration cache) {
+        try {
+            cache.save(getPluginCacheFile());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Saves the kits file.
+     * @param kitYml The instance of the kits file to save.
+     */
+    public static void saveKitFile(YamlConfiguration kitYml) {
+        try {
+            kitYml.save(getKitsFile());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
