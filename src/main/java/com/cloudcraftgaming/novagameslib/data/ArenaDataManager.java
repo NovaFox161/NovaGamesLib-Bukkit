@@ -1,6 +1,9 @@
 package com.cloudcraftgaming.novagameslib.data;
 
 import com.cloudcraftgaming.novagameslib.NovaGamesLib;
+import com.cloudcraftgaming.novagameslib.arena.ArenaManager;
+import com.cloudcraftgaming.novagameslib.event.arena.ArenaDisableEvent;
+import com.cloudcraftgaming.novagameslib.event.arena.ArenaEnableEvent;
 import com.cloudcraftgaming.novagameslib.region.Cuboid;
 import com.cloudcraftgaming.novagameslib.team.Team;
 import com.cloudcraftgaming.novagameslib.utils.FileManager;
@@ -108,8 +111,6 @@ public class ArenaDataManager {
 	 * @param id The ID of the arena to enable.
 	 * @return <code>true</code> if successful, else <code>false</code>.
 	 */
-
-	/* UNBLOCK ONCE EVENTS ARE ADDED
 	public static Boolean enableArena(int id) {
 		if (!arenaEnabled(id)) {
 			if (canBeLoaded(id)) {
@@ -125,10 +126,10 @@ public class ArenaDataManager {
 					if (event.autoLoad()) {
 						ArenaManager.getManager().loadArena(id, getGameName(id), usesTeams(id));
 					} else {
-						updateArenaInfo(id);
+						//updateArenaInfo(id);
 					}
 					if (FileManager.verbose()) {
-						OYAGamesManager.plugin.getLogger().info("Enabled arena " + id);
+						NovaGamesLib.plugin.getLogger().info("Enabled arena " + id);
 					}
 					return true;
 				}
@@ -136,7 +137,6 @@ public class ArenaDataManager {
 		}
 		return false;
 	}
-	*/
 
 	/**
 	 * Called to disable an arena. This will call the {@link ArenaDisableEvent} event.
@@ -144,7 +144,6 @@ public class ArenaDataManager {
 	 * @param id The ID of the arena to disable.
 	 * @return <code>true</code> if successful, else <code>false</code>.
 	 */
-	/* UNBLOCK ONCE EVENTS ARE ADDED
 	public static Boolean disableArena(int id) {
 		if (arenaEnabled(id)) {
 			ArenaDisableEvent event = new ArenaDisableEvent(id);
@@ -159,17 +158,16 @@ public class ArenaDataManager {
 				if (event.autoUnload()) {
 					ArenaManager.getManager().unloadArena(id);
 				} else {
-					updateArenaInfo(id);
+					//updateArenaInfo(id);
 				}
 				if (FileManager.verbose()) {
-					OYAGamesManager.plugin.getLogger().info("Disabled arena " + id);
+					NovaGamesLib.plugin.getLogger().info("Disabled arena " + id);
 				}
 				return true;
 			}
 		}
 		return false;
 	}
-	*/
 
 	//Booleans/Checkers
 	/**

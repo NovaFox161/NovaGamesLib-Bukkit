@@ -1,8 +1,18 @@
 package com.cloudcraftgaming.novagameslib.arena;
 
+import com.cloudcraftgaming.novagameslib.NovaGamesLib;
+import com.cloudcraftgaming.novagameslib.data.ArenaDataManager;
+import com.cloudcraftgaming.novagameslib.event.arena.ArenaLoadEvent;
+import com.cloudcraftgaming.novagameslib.event.arena.ArenaReloadEvent;
+import com.cloudcraftgaming.novagameslib.event.arena.ArenaUnloadEvent;
+import com.cloudcraftgaming.novagameslib.game.GameState;
+import com.cloudcraftgaming.novagameslib.utils.FileManager;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+
+import static com.cloudcraftgaming.novagameslib.NovaGamesLib.plugin;
 
 /**
  * Created by Nova Fox on 11/17/16.
@@ -120,5 +130,157 @@ public class ArenaManager {
 		return arenas;
 	}
 
-	//Functionals - Grab from GitHub once events are added due to errors.
+	//Functionals
+	/**
+	 * Called when loading an arena, often from another plugin.
+	 * This will call the {@link ArenaLoadEvent} event.
+	 * If not cancelled, will mark the specified arena as loaded.
+	 * This will NOT mark any actual arena data!!!! YOU MUST SET THAT YOURSELF!!!
+	 * @param arena The arena to mark as loaded.
+	 * @return <code>true</code> if not cancelled and successful, else <code>false</code>.
+	 */
+	public Boolean loadArena(Arena arena) {
+		if (!arenaLoaded(arena.getId())) {
+			ArenaLoadEvent event = new ArenaLoadEvent(arena);
+			Bukkit.getServer().getPluginManager().callEvent(event);
+
+			if (!event.isCancelled()) {
+				arenas.add(arena);
+				//ArenaDataManager.updateArenaInfo(arena.getId());
+				if (FileManager.verbose()) {
+					plugin.getLogger().info("Loaded arena " + arena.getId());
+				}
+				return true;
+			}
+
+		}
+		return false;
+	}
+
+	/**
+	 * Called when loading an arena. This will call the {@link ArenaLoadEvent} event.
+	 * If not cancelled, this will either load the arena from scratch, or copy the arena from the event.
+	 * @param id The id of the arena to load.
+	 * @return <code>true</code> if not cancelled and successful, else <code>false</code>.
+	 */
+	public Boolean loadArena(int id, String gameName, Boolean useTeams) {
+		if (!arenaLoaded(id)) {
+			if (ArenaDataManager.arenaExists(id)) {
+				if (ArenaDataManager.canBeLoaded(id)) {
+					ArenaLoadEvent event = new ArenaLoadEvent(id, gameName);
+					Bukkit.getServer().getPluginManager().callEvent(event);
+
+					if (!event.isCancelled()) {
+						if (event.shouldLetNovaGamesHandle()) {
+							Arena arena = new Arena(id, gameName, useTeams);
+							arena.setArenaStatus(ArenaStatus.EMPTY);
+							arena.setGameState(GameState.NOT_STARTED);
+							arena.setPlayerCount(0);
+							arena.setJoinable(true);
+							arenas.add(arena);
+							//ArenaDataManager.updateArenaInfo(id);
+							if (FileManager.verbose()) {
+								plugin.getLogger().info("Loaded arena " + id);
+							}
+							return true;
+						} else {
+							if (event.getArena() != null) {
+								arenas.add(event.getArena());
+							}
+							//ArenaDataManager.updateArenaInfo(id);
+							if (FileManager.verbose()) {
+								plugin.getLogger().info("Loaded arena " + id);
+							}
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Called when unloading an arena, often from another plugin.
+	 * This will call the {@link ArenaUnloadEvent} event.
+	 * If not cancelled, will mark the specified arena as unloaded.
+	 * This will NOT mark any actual arena data!!!! YOU MUST SET THAT YOURSELF!!!
+	 * @param arena The arena to mark as unloaded.
+	 * @return <code>true</code> if not cancelled and successful, else <code>false</code>.
+	 */
+	public Boolean unloadArena(Arena arena) {
+		if (arenaLoaded(arena.getId())) {
+			ArenaUnloadEvent event = new ArenaUnloadEvent(arena);
+			Bukkit.getServer().getPluginManager().callEvent(event);
+
+			if (!event.isCancelled()) {
+				arenas.remove(arena);
+				//ArenaDataManager.updateArenaInfo(arena.getId());
+				if (FileManager.verbose()) {
+					plugin.getLogger().info("Unloaded arena " + arena.getId());
+				}
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Called when unloading an arena. This will call the {@link ArenaUnloadEvent} event.
+	 * If not cancelled, this will either unload the arena, or copy the arena from the event.
+	 * @param id The id of the arena to unload.
+	 * @return <code>true</code> if not cancelled and successful, else <code>false</code>.
+	 */
+	public Boolean unloadArena(int id) {
+		if (arenaLoaded(id)) {
+			ArenaUnloadEvent event = new ArenaUnloadEvent(id, ArenaDataManager.getGameName(id));
+			Bukkit.getServer().getPluginManager().callEvent(event);
+
+			if (!event.isCancelled()) {
+				if (event.shouldLetNovaGamesHandle()) {
+					Arena arena = getArena(id);
+					arenas.remove(arena);
+					//ArenaDataManager.updateArenaInfo(id);
+					if (FileManager.verbose()) {
+						plugin.getLogger().info("Unloaded arena " + id);
+					}
+					return true;
+				} else {
+					if (event.getArena() != null) {
+						arenas.remove(event.getArena());
+					}
+					//ArenaDataManager.updateArenaInfo(id);
+					if (FileManager.verbose()) {
+						NovaGamesLib.plugin.getLogger().info("Unloaded arena " + id);
+					}
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Called when reloading an arena. This will call the {@link ArenaReloadEvent} event.
+	 * If not cancelled, this will reload the arena.
+	 * @param id The id of the arena to reload.
+	 * @return <code>true</code> if not cancelled and successful, else <code>false</code>.
+	 */
+	public Boolean reloadArena(int id) {
+		if (arenaLoaded(id)) {
+			String gameName = getArena(id).getGameName();
+			Boolean useTeams = getArena(id).useTeams();
+			ArenaReloadEvent event = new ArenaReloadEvent(getArena(id));
+			Bukkit.getServer().getPluginManager().callEvent(event);
+
+			if (!event.isCancelled()) {
+				if (FileManager.verbose()) {
+					NovaGamesLib.plugin.getLogger().info("Reloading arena " + id);
+				}
+				unloadArena(id);
+				return loadArena(id, gameName, useTeams);
+			}
+		}
+		return false;
+	}
 }
