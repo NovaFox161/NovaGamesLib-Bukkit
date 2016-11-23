@@ -2,8 +2,11 @@ package com.cloudcraftgaming.novagameslib;
 
 import com.cloudcraftgaming.novagameslib.database.DatabaseInfo;
 import com.cloudcraftgaming.novagameslib.database.MySQL;
+import com.cloudcraftgaming.novagameslib.listener.*;
 import com.cloudcraftgaming.novagameslib.utils.FileManager;
 import com.cloudcraftgaming.novagameslib.utils.MessageManager;
+import com.cloudcraftgaming.novagameslib.utils.PluginChecker;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.Connection;
@@ -17,6 +20,7 @@ import java.sql.Statement;
  */
 public class NovaGamesLib extends JavaPlugin {
     public static NovaGamesLib plugin;
+    public Plugin perWorldChatPlus;
 
     private DatabaseInfo databaseInfo;
 
@@ -42,12 +46,21 @@ public class NovaGamesLib extends JavaPlugin {
         }
 
         //Register events and commands
+        getServer().getPluginManager().registerEvents(new SignChangeListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerMoveListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerInteractListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerDeathListener(), this);
+        getServer().getPluginManager().registerEvents(new CommandListener(), this);
+        getServer().getPluginManager().registerEvents(new ChatListener(), this);
 
         //Do database things
         connectToMySQL();
         createTablesInMySQL();
 
         //Finally do a few more things.
+        PluginChecker.checkForPerWorldChatPlus();
     }
 
     private void connectToMySQL() {
