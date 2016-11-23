@@ -1,11 +1,15 @@
 package com.cloudcraftgaming.novagameslib;
 
+import com.cloudcraftgaming.novagameslib.arena.ArenaManager;
+import com.cloudcraftgaming.novagameslib.data.ArenaDataManager;
+import com.cloudcraftgaming.novagameslib.data.DataCache;
 import com.cloudcraftgaming.novagameslib.database.DatabaseInfo;
 import com.cloudcraftgaming.novagameslib.database.MySQL;
 import com.cloudcraftgaming.novagameslib.listener.*;
 import com.cloudcraftgaming.novagameslib.utils.FileManager;
 import com.cloudcraftgaming.novagameslib.utils.MessageManager;
 import com.cloudcraftgaming.novagameslib.utils.PluginChecker;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -27,6 +31,9 @@ public class NovaGamesLib extends JavaPlugin {
     @Override
     public void onDisable() {
         //Save everything and stuff
+        unloadArenasShutdown();
+
+        //Update database
 
         disconnectFromMySQL();
     }
@@ -61,6 +68,8 @@ public class NovaGamesLib extends JavaPlugin {
 
         //Finally do a few more things.
         PluginChecker.checkForPerWorldChatPlus();
+
+        loadArenasStartup();
     }
 
     private void connectToMySQL() {
@@ -143,6 +152,44 @@ public class NovaGamesLib extends JavaPlugin {
             } catch (SQLException e) {
                 getLogger().info("MySQL Error; Exit code: 00101");
             }
+        }
+    }
+
+    private void loadArenasStartup() {
+        Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+            @Override
+            public void run() {
+                if (FileManager.verbose()) {
+                    getLogger().info("Loading all enabled arenas...");
+                }
+                for (Integer id : DataCache.getAllUsedIDs()) {
+                    if (ArenaDataManager.arenaEnabled(id)) {
+                        if (ArenaDataManager.arenaEnabled(id)) {
+                            ArenaManager.getManager().loadArena(id, ArenaDataManager.getGameName(id),
+                                    ArenaDataManager.usesTeams(id));
+                        }
+                    }
+                }
+                if (FileManager.verbose()) {
+                    getLogger().info("All enabled arenas successfully loaded!");
+                }
+            }
+        }, 20L * 10);
+    }
+
+    private void unloadArenasShutdown() {
+        if (FileManager.verbose()) {
+            getLogger().info("Unloading all loaded arenas! Plugin will disable shortly...");
+        }
+        for (Integer id : DataCache.getAllUsedIDs()) {
+            if (ArenaDataManager.arenaExists(id)) {
+                if (ArenaManager.getManager().arenaLoaded(id)) {
+                    ArenaManager.getManager().unloadArena(id);
+                }
+            }
+        }
+        if (FileManager.verbose()) {
+            getLogger().info("Unloaded all loaded arenas! Plugin will now be disabled!");
         }
     }
 

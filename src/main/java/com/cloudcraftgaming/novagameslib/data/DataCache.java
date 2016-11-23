@@ -3,6 +3,7 @@ package com.cloudcraftgaming.novagameslib.data;
 import com.cloudcraftgaming.novagameslib.utils.FileManager;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,5 +32,17 @@ public class DataCache {
 		FileManager.savePluginCache(pluginCache);
 
 		return nextId;
+	}
+
+	public static ArrayList<Integer> getAllUsedIDs() {
+		ArrayList<Integer> usedIds = new ArrayList<>();
+		YamlConfiguration pluginCache = FileManager.getPluginCacheYml();
+		List<String> usedIdsString = pluginCache.getStringList("UsedIds");
+		for (String s : usedIdsString) {
+			if (!usedIds.contains(Integer.valueOf(s))) {
+				usedIds.add(Integer.valueOf(s));
+			}
+		}
+		return usedIds;
 	}
 }
