@@ -1,7 +1,7 @@
 name: NovaGamesLib
-version: 1.0.0
+version: 0.0.1
 description: An advanced API and library for Nova(Shades161)'s minigames.
-author: Shades161
+author: Shades161 (NovaFox161)
 website: http://www.cloudcraftgaming.com
 
 main: com.cloudcraftgaming.novagameslib.NovaGamesLib
