@@ -19,7 +19,7 @@ import java.util.List;
  * Website: www.cloudcraftgaming.com
  * For Project: NovaGamesLib
  */
-@SuppressWarnings({"unused", "WeakerAccess"})
+@SuppressWarnings("WeakerAccess, unused")
 public class ArenaDataManager {
 	//Functionals
 	/**
