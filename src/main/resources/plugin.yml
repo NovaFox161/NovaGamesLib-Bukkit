@@ -4,4 +4,6 @@ description: An advanced API and library for Nova(Shades161)'s minigames.
 author: Shades161 (NovaFox161)
 website: http://www.cloudcraftgaming.com
 
+softdepend: [Vault]
+
 main: com.cloudcraftgaming.novagameslib.NovaGamesLib

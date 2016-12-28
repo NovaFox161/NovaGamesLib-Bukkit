@@ -9,8 +9,10 @@ import com.cloudcraftgaming.novagameslib.listener.*;
 import com.cloudcraftgaming.novagameslib.utils.FileManager;
 import com.cloudcraftgaming.novagameslib.utils.MessageManager;
 import com.cloudcraftgaming.novagameslib.utils.PluginChecker;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.Connection;
@@ -25,6 +27,7 @@ import java.sql.Statement;
 public class NovaGamesLib extends JavaPlugin {
     public static NovaGamesLib plugin;
     public Plugin perWorldChatPlus;
+    public static Economy econ = null;
 
     private DatabaseInfo databaseInfo;
 
@@ -68,6 +71,7 @@ public class NovaGamesLib extends JavaPlugin {
 
         //Finally do a few more things.
         PluginChecker.checkForPerWorldChatPlus();
+        setupEconomy();
 
         loadArenasStartup();
     }
@@ -191,6 +195,18 @@ public class NovaGamesLib extends JavaPlugin {
         if (FileManager.verbose()) {
             getLogger().info("Unloaded all loaded arenas! Plugin will now be disabled!");
         }
+    }
+
+    private boolean setupEconomy() {
+        if (getServer().getPluginManager().getPlugin("Vault") == null) {
+            return false;
+        }
+        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+        if (rsp == null) {
+            return false;
+        }
+        econ = rsp.getProvider();
+        return econ != null;
     }
 
     //Getters
