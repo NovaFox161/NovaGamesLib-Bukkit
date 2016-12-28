@@ -35,4 +35,4 @@ Planned features/In progress:
 - And more.
 
 
-Javadoc: Coming soon
+Javadoc: https://novafox161.github.io/NovaGamesLib-Bukkit/Javadocs/
