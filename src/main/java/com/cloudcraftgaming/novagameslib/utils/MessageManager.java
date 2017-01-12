@@ -65,6 +65,27 @@ public class MessageManager {
             msg.addDefault("Command.Set.LateJoin", "&3Allow late join set to &6%value% &3for arena &6%id%&3!");
             msg.addDefault("Command.Set.GameMode.Success", "&3GameMode set to &6%value% &3for arena &6%id%&3!");
 
+            msg.addDefault("Kit.Get.Success", "&6You have successfully gotten kit &5%kit%&6!");
+            msg.addDefault("Kit.Get.Failure.NotEnoughFunds", "&4You do not have enough %currency% to use that kit!");
+            msg.addDefault("Kit.Get.Failure.VaultNotFound", "&4Unable to access account! Please try again later!");
+            msg.addDefault("Kit.Apply.Failure.InGame", "&4Kits can only be applied before the game starts!");
+            msg.addDefault("Kit.Apply.Success", "&6The selected will be applied when the game starts!");
+            msg.addDefault("Kit.Command.List.Heading", "&4-~-&6Kit List&4-~-");
+            msg.addDefault("Kit.Command.List.Hint", "&6Use &3/mr kit <kitName> &6to select a kit!");
+            msg.addDefault("Kit.Command.Create.Failure", "&4Failed to create a new kit!");
+            msg.addDefault("Kit.Command.Create.Success", "&4Successfully created kit %kit%!");
+            msg.addDefault("Kit.Command.Delete.Failure", "&4Failed to delete the specified kit!");
+            msg.addDefault("Kit.Command.Delete.Success", "&4Successfully deleted the specified kit!");
+            msg.addDefault("Kit.Command.Set.DisplayName.Success", "&6Successfully changed display name!");
+            msg.addDefault("Kit.Command.set.DisplayName.Failure", "&4Failed to change display name!");
+            msg.addDefault("Kit.Command.Set.Description.Success", "&6Successfully changed description!");
+            msg.addDefault("Kit.Command.Set.Description.Failure", "&4Failed to change description!");
+            msg.addDefault("Kit.Command.Set.Cost.Success", "&6Successfully changed cost!");
+            msg.addDefault("Kit.Command.Set.Cost.Failure", "&4Failed to change cost!");
+            msg.addDefault("Kit.Notif.DoesNotExist", "&4The specified kit does not exist!");
+            msg.addDefault("Kit.Notif.AlreadyExists", "&4A kit with that name already exists!");
+            msg.addDefault("Kit.Notif.NoPerm", "&4You do not have permission to use that kit!");
+
             msg.addDefault("Notifications.Player.InGame", "&4You can only be in 1 minigame at a time!");
             msg.addDefault("Notifications.Player.HasItems", "&4Your inventory must be empty to join the minigame!");
             msg.addDefault("Notifications.Player.NotInGame", "&4You are not in a minigame!");
@@ -93,6 +114,7 @@ public class MessageManager {
             msg.addDefault("Notifications.Bool.LateJoin", "&4Late join allowed must be 'True' or 'False'");
             msg.addDefault("Notifications.Team.Invalid", "&4Invalid team specified!");
             msg.addDefault("Notifications.GameMode.Invalid", "&4Invalid GameMode specified");
+            msg.addDefault("Notifications.Error.General", "&4Oops! Something went wrong! Please try again!");
 
             msg.options().copyDefaults(true);
             saveMessages(msg);
