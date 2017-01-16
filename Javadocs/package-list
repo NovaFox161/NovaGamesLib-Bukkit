@@ -10,6 +10,7 @@ com.cloudcraftgaming.novagameslib.event.regeneration
 com.cloudcraftgaming.novagameslib.event.region
 com.cloudcraftgaming.novagameslib.event.time
 com.cloudcraftgaming.novagameslib.game
+com.cloudcraftgaming.novagameslib.kit
 com.cloudcraftgaming.novagameslib.listener
 com.cloudcraftgaming.novagameslib.mechanics
 com.cloudcraftgaming.novagameslib.regeneration
