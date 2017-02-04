@@ -84,10 +84,10 @@ Directions on how to use it are provided below (currently only Maven is supporte
        }
    }
    ```
-   4. And now you can start using NGL in your plugin. Just check the Javadoc for extra help!
+4. And now you can start using NGL in your plugin. Just check the Javadoc for extra help!
    
-   ###Examples and Tutorials
-   Example code, plugins, and more will soon be provided here.
+###Examples and Tutorials
+Example code, plugins, and more will soon be provided here.
 
 ## Contributing
 1. Fork this repo and make changes in your own copy
