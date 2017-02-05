@@ -223,4 +223,33 @@ public class PlayerStats {
     public void setTimesPlayed(Integer _timesPlayed) {
         timesPlayed = _timesPlayed;
     }
+
+    //Functionals
+    /**
+     * Calculates the new stats by combining previous stats.
+     * @param _stats The stats to combine.
+     */
+    public void calculate(PlayerStats _stats) {
+        totalKills = totalKills + _stats.getTotalKills();
+        totalDeaths = totalDeaths + _stats.getTotalDeaths();
+        totalScored = totalScored + _stats.getTotalScored();
+
+        if (_stats.getMostKills() > mostKills) {
+            mostKills = _stats.getMostKills();
+        }
+        if (_stats.getMostDeaths() > mostDeaths) {
+            mostDeaths = _stats.getMostDeaths();
+        }
+        if (_stats.getMostScored() > mostScored) {
+            mostScored = _stats.getMostScored();
+        }
+
+        if (_stats.getLeastDeaths() < leastDeaths) {
+            leastDeaths = _stats.getLeastDeaths();
+        }
+
+        wins = wins + _stats.getWins();
+        loses = loses + _stats.getLoses();
+        timesPlayed = timesPlayed + _stats.getTimesPlayed();
+    }
 }

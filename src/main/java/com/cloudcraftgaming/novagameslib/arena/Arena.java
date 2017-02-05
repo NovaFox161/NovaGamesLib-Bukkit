@@ -306,6 +306,22 @@ public class Arena {
 	}
 
 	/**
+	 * Adds the specified player's {@link PlayerStats} and allows for manually overwriting if required.
+	 * @param _stats The {@link PlayerStats} of the player with their UUID respectively.
+	 * @param overwrite Whether or not to manually overwrite the stats if they already exist.
+	 */
+	public void setPlayerStats(PlayerStats _stats, Boolean overwrite) {
+		if (playerStats.containsKey(_stats.getPlayerUUID())) {
+			if (overwrite) {
+				playerStats.remove(_stats.getPlayerUUID());
+				playerStats.put(_stats.getPlayerUUID(), _stats);
+			}
+		} else {
+			playerStats.put(_stats.getPlayerUUID(), _stats);
+		}
+	}
+
+	/**
 	 * Sets whether or not the arena currently has the Main Scoreboard displayed.
 	 * Ignore if not using teams.
 	 * @param value Whether or not the Main Scoreboard is displayed.

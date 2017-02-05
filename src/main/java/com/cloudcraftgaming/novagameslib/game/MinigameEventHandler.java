@@ -3,10 +3,15 @@ package com.cloudcraftgaming.novagameslib.game;
 import com.cloudcraftgaming.novagameslib.NovaGamesLib;
 import com.cloudcraftgaming.novagameslib.arena.Arena;
 import com.cloudcraftgaming.novagameslib.arena.ArenaManager;
+import com.cloudcraftgaming.novagameslib.arena.ArenaStatus;
+import com.cloudcraftgaming.novagameslib.database.DatabaseManager;
 import com.cloudcraftgaming.novagameslib.event.minigame.*;
+import com.cloudcraftgaming.novagameslib.player.PlayerStats;
 import com.cloudcraftgaming.novagameslib.utils.FileManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+
+import java.util.UUID;
 
 import static com.cloudcraftgaming.novagameslib.NovaGamesLib.plugin;
 
@@ -34,10 +39,10 @@ public class MinigameEventHandler {
 
             if (!event.isCancelled()) {
                 //ArenaDataManager.updateArenaInfo(id);
-                //DatabaseManager.setDefaultStats(OYAGamesManager.plugin.getDatabaseInfo(), player.getUniqueId(), arena.getGameName());
                 if (FileManager.verbose()) {
                     plugin.getLogger().info(player.getName() + " has joined arena " + id);
                 }
+                arena.setPlayerStats(new PlayerStats(player.getUniqueId(), arena.getGameName()), false);
                 return true;
             } else {
                 if (arena.getPlayers().contains(player.getUniqueId())) {
@@ -94,15 +99,19 @@ public class MinigameEventHandler {
             if (FileManager.verbose()) {
                 plugin.getLogger().info(player.getName() + " has quit arena " + arena.getId());
             }
-            /* UNBLOCK ONCE STATS TRACKING IS ADDED
             if (NovaGamesLib.plugin.getConfig().getString("Stats.Track.Enabled").equalsIgnoreCase("True")) {
                 if (arena.getArenaStatus().equals(ArenaStatus.INGAME) || arena.getGameState().equals(GameState.INGAME)) {
                     UUID uuid = player.getUniqueId();
-                    DatabaseManager.updateAllStats(OYAGamesManager.plugin.getDatabaseInfo(), uuid, arena.getGameName(), arena.getKills(player),
-                            arena.getDeaths(player), arena.getScores(player), false);
+                    PlayerStats oldStats = DatabaseManager.getManager().getPlayerStats(uuid, arena.getGameName());
+                    PlayerStats newStats = arena.getPlayerStats(uuid);
+
+                    //Player quit, lost by default.
+                    newStats.setLoses(1);
+
+                    newStats.calculate(oldStats);
+                    DatabaseManager.getManager().addPlayerStats(newStats);
                 }
             }
-            */
         } else if (arena.getSpectators().contains(player.getUniqueId())) {
             arena.getSpectators().remove(player.getUniqueId());
             if (FileManager.verbose()) {
@@ -127,6 +136,11 @@ public class MinigameEventHandler {
                 plugin.getLogger().info("Minigame in arena " + id + " has started.");
             }
             //ArenaDataManager.updateArenaInfo(id);
+            for (UUID pId : event.getArena().getPlayers()) {
+                PlayerStats newStats = new PlayerStats(pId, event.getGameName());
+                newStats.setTimesPlayed(1);
+                event.getArena().setPlayerStats(newStats);
+            }
         }
         return false;
     }
@@ -139,18 +153,25 @@ public class MinigameEventHandler {
      */
     public static Boolean endMinigame(Integer id) {
         Arena arena = ArenaManager.getManager().getArena(id);
-        /* UNBLOCK ONCE STATS TRACKING IS ADDED
         if (NovaGamesLib.plugin.getConfig().getString("Stats.Track.Enabled").equalsIgnoreCase("True")) {
             if (arena.getArenaStatus().equals(ArenaStatus.INGAME) || arena.getGameState().equals(GameState.INGAME)) {
+
+                //Calculate stats
                 for (UUID pId : arena.getPlayers()) {
-                    Player p = Bukkit.getPlayer(pId);
-                    Boolean hasWon = arena.getWinningPlayers().contains(pId);
-                    DatabaseManager.updateAllStats(OYAGamesManager.plugin.getDatabaseInfo(), pId, arena.getGameName(), arena.getKills(p),
-                            arena.getDeaths(p), arena.getScores(p), hasWon);
+                    PlayerStats oldStats = DatabaseManager.getManager().getPlayerStats(pId, arena.getGameName());
+                    PlayerStats newStats = arena.getPlayerStats(pId);
+
+                    //Check wins, as they are already calculated by this point in time.
+                    if (arena.getWinningPlayers().contains(pId)) {
+                        newStats.setWins(1);
+                    } else {
+                        newStats.setLoses(1);
+                    }
+                    newStats.calculate(oldStats);
+                    DatabaseManager.getManager().addPlayerStats(newStats);
                 }
             }
         }
-        */
         MinigameEndEvent event = new MinigameEndEvent(arena);
         Bukkit.getServer().getPluginManager().callEvent(event);
         if (FileManager.verbose()) {
