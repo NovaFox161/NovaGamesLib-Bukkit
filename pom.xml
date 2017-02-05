@@ -6,7 +6,7 @@
 
     <groupId>com.cloudcraftgaming</groupId>
     <artifactId>NovaGamesLib</artifactId>
-    <version>0.0.1</version>
+    <version>Beta 0.0.1</version>
     <build>
         <plugins>
             <plugin>
