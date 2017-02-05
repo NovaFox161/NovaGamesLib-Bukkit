@@ -1,10 +1,10 @@
 package com.cloudcraftgaming.novagameslib.arena;
 
 import com.cloudcraftgaming.novagameslib.game.GameState;
+import com.cloudcraftgaming.novagameslib.player.PlayerStats;
 import com.cloudcraftgaming.novagameslib.scoreboard.BoardManager;
 import com.cloudcraftgaming.novagameslib.team.Team;
 import com.cloudcraftgaming.novagameslib.team.Teams;
-import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,9 +32,7 @@ public class Arena {
 	private Boolean joinable;
 
 	//Scores and stats
-	private final HashMap<UUID, Integer> kills = new HashMap<>();
-	private final HashMap<UUID, Integer> deaths = new HashMap<>();
-	private final HashMap<UUID, Integer> scores = new HashMap<>();
+	private final HashMap<UUID, PlayerStats> playerStats = new HashMap<>();
 
 	private final ArrayList<UUID> winningPlayers = new ArrayList<>();
 	private final ArrayList<Team> winningTeams = new ArrayList<>();
@@ -195,39 +193,20 @@ public class Arena {
 	}
 
 	/**
-	 * Gets the amount of kills the specified player has.
-	 * @param player The player to get.
-	 * @return The amount of kills the specified player has.
+	 * Gets the specified player's stats.
+	 * @param uuid The UUID of the player whose stats to get.
+	 * @return The specified player's stats.
 	 */
-	public Integer getKills(Player player) {
-		if (kills.containsKey(player.getUniqueId())) {
-			return kills.get(player.getUniqueId());
-		}
-		return 0;
+	public PlayerStats getPlayerStats(UUID uuid) {
+		return playerStats.get(uuid);
 	}
 
 	/**
-	 * Gets the amount of deaths the specified player has.
-	 * @param player The player to get.
-	 * @return The amount of deaths the specified player has.
+	 * Gets a {@link HashMap} of players' stats.
+	 * @return A {@link HashMap} of players's stats.
 	 */
-	public Integer getDeaths(Player player) {
-		if (deaths.containsKey(player.getUniqueId())) {
-			return deaths.get(player.getUniqueId());
-		}
-		return 0;
-	}
-
-	/**
-	 * Gets the amount of times the specified player has scored.
-	 * @param player The player to get.
-	 * @return The amount of times the specified player has scored.
-	 */
-	public Integer getScores(Player player) {
-		if (scores.containsKey(player.getUniqueId())) {
-			return scores.get(player.getUniqueId());
-		}
-		return 0;
+	public HashMap<UUID, PlayerStats> getPlayerStats() {
+		return playerStats;
 	}
 
 	/**
@@ -316,39 +295,14 @@ public class Arena {
 	}
 
 	/**
-	 * Sets the amount of kills the specified player has.
-	 * @param player The player to set.
-	 * @param _kills The amount of kills the specified player has.
+	 * Adds the specified player's {@link PlayerStats}.
+	 * @param _stats The {@link PlayerStats} of the player with their UUID respectively.
 	 */
-	public void setKills(Player player, Integer _kills) {
-		if (kills.containsKey(player.getUniqueId())) {
-			kills.remove(player.getUniqueId());
+	public void setPlayerStats(PlayerStats _stats) {
+		if (playerStats.containsKey(_stats.getPlayerUUID())) {
+			playerStats.remove(_stats.getPlayerUUID());
 		}
-		kills.put(player.getUniqueId(), _kills);
-	}
-
-	/**
-	 * Sets the amount of deaths the specified player has.
-	 * @param player The player to set.
-	 * @param _deaths The amount of deaths the specified player has.
-	 */
-	public void setDeaths(Player player, Integer _deaths) {
-		if (deaths.containsKey(player.getUniqueId())) {
-			deaths.remove(player.getUniqueId());
-		}
-		deaths.put(player.getUniqueId(), _deaths);
-	}
-
-	/**
-	 * Sets the amount of times the specified player has scored.
-	 * @param player The player to set.
-	 * @param _scores The amount of times the specified player has scored.
-	 */
-	public void setScores(Player player, Integer _scores) {
-		if (scores.containsKey(player.getUniqueId())) {
-			scores.remove(player.getUniqueId());
-		}
-		scores.put(player.getUniqueId(), _scores);
+		playerStats.put(_stats.getPlayerUUID(), _stats);
 	}
 
 	/**
