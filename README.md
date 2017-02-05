@@ -26,6 +26,8 @@ Looking for NovaGamesLib for Bungee Servers? Don't worry! It's in development!
 
 ###Stats Tracking
 NovaGamesLib will handle all stats tracking by default if a database is set up reducing your workload. 
+ 
+NGL handles all stats tracking internally! That means that you need not worry about it!!
 
 With integrated stats tracking, NGL can provide and in depth look into how players perform in a minigame. NGL will also allow the lookup of these stats so that your plugin can display in game or, if desired, within a website.
 <br> <br>
@@ -42,6 +44,7 @@ NGL currently tracks all of the following stats:
 - Total games played
 
 ##Planned and In-Progress Features
+- Built in rewards system.
 - Player inventory back up (with exp saving)
 - Arena GUI selector
 - Kit GUI selector
@@ -55,35 +58,35 @@ Implementing NGL is super simple!
 Directions on how to use it are provided below (currently only Maven is supported).
 ###Maven
 1. Import into pom.xml by inserting the following (where version is your target version):
-```xml
-<repository>
-        <id>jitpack.io</id>
-        <url>https://jitpack.io</url>
-    </repository>
-```
-```xml
-    <dependency>
-        <groupId>com.github.NovaFox161</groupId>
-        <artifactId>NovaGamesLib-Bukkit</artifactId>
-        <version>VERSION</version>
-    </dependency>
-```
+    ```xml
+       <repository>
+           <id>jitpack.io</id>
+           <url>https://jitpack.io</url>
+       </repository>
+    ```
+    ```xml
+        <dependency>
+            <groupId>com.github.NovaFox161</groupId>
+            <artifactId>NovaGamesLib-Bukkit</artifactId>
+            <version>VERSION</version>
+        </dependency>
+    ```
 2. Use the JavaDoc provided here: https://novafox161.github.io/NovaGamesLib-Bukkit/Javadocs/
 3. In your main class, in `#OnEnable` add this code (extra code shown for extra help):
-```java
-   public class Main extends JavaPlugin {
-       public void onEnable() {
-           //Do stuff...
-           
-           //Add this code:
-           Plugin ngl = plugin.getServer().getPluginManager().getPlugin("NovaGamesLib-Bukkit");
-           if (ngl != null) {
-               //Check version and do anything else here
+    ```java
+       public class Main extends JavaPlugin {
+           public void onEnable() {
+               //Do stuff...
+               
+               //Add this code:
+               Plugin ngl = plugin.getServer().getPluginManager().getPlugin("NovaGamesLib-Bukkit");
+               if (ngl != null) {
+                   //Check version and do anything else here
+               }
+               //Do stuff...
            }
-           //Do stuff...
        }
-   }
-   ```
+    ```
 4. And now you can start using NGL in your plugin. Just check the Javadoc for extra help!
    
 ###Examples and Tutorials
@@ -94,3 +97,6 @@ Example code, plugins, and more will soon be provided here.
 2. Add a test if applicable and run the existing tests with `mvn clean test` to make sure they pass
 3. Commit your changes and push to your fork `git push origin master`
 4. Create a new pull request and submit it back to us!
+
+## Plugins Using NovaGamesLib
+Add your plugin below or send us a DM letting us know about your awesome new Minigame plugin that utilizes NovaGamesLib!
