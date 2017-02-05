@@ -32,6 +32,7 @@ public class FileManager {
             plugin.getConfig().addDefault("Check for Updates", true);
             plugin.getConfig().addDefault("Language", "English");
             plugin.getConfig().addDefault("Console.Verbose", true);
+            plugin.getConfig().addDefault("Console.Debug", false);
 
             plugin.getConfig().addDefault("Database.MySQL.Use", false);
             plugin.getConfig().addDefault("Database.MySQL.Hostname", "localhost");
@@ -155,6 +156,10 @@ public class FileManager {
 
     public static Boolean verbose() {
         return NovaGamesLib.plugin.getConfig().getString("Console.Verbose").equalsIgnoreCase("True");
+    }
+
+    public static Boolean debug() {
+        return NovaGamesLib.plugin.getConfig().getString("Console.Debug").equalsIgnoreCase("True");
     }
 
     public static Boolean useMySQL() {

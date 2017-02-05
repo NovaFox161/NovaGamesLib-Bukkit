@@ -1,17 +1,18 @@
 package com.cloudcraftgaming.novagameslib.database;
 
 import com.cloudcraftgaming.novagameslib.NovaGamesLib;
+import com.cloudcraftgaming.novagameslib.player.PlayerStats;
 import com.cloudcraftgaming.novagameslib.utils.FileManager;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.UUID;
 
 /**
  * Created by Nova Fox on 2/4/2017.
  * Website: www.cloudcraftgaming.com
  * For Project: NovaGamesLib-Bukkit
  */
+@SuppressWarnings("SqlResolve")
 public class DatabaseManager {
     private static DatabaseManager instance;
 
@@ -60,6 +61,132 @@ public class DatabaseManager {
         return databaseInfo;
     }
 
+    //Stats
+    /**
+     * Adds or updates a player's stats in the database for a specific game.
+     * @param stats The stats to insert into the database.
+     * @return <code>true</code> if successful, otherwise <code>false</code>.
+     */
+    public Boolean addPlayerStats(PlayerStats stats) {
+        if (databaseInfo != null) {
+            try {
+                if (databaseInfo.getMySQL().checkConnection()) {
+                    String playerStatsTableName = databaseInfo.getPrefix() + "PLAYER_STATS";
+
+                    Statement statement = databaseInfo.getConnection().createStatement();
+                    String query = "SELECT * FROM " + playerStatsTableName + " WHERE PLAYER_UUID = '" + stats.getPlayerUUID() + "';";
+                    ResultSet res = statement.executeQuery(query);
+
+                    //Check if stats for player AND game are saved.
+                    Boolean hasStats = false;
+                    while (res.next()) {
+                        if (res.getString("PLAYER_UUID") != null && res.getString("GAME_NAME").equals(stats.getGameName())) {
+                            hasStats = true;
+                            break;
+                        }
+                    }
+
+                    if (!hasStats) {
+                        //Stats not saved, add defaults now.
+                        String insertCommand = "INSERT INTO " + playerStatsTableName +
+                                "(PLAYER_UUID, GAME_NAME," +
+                                " TOTAL_KILLS, TOTAL_DEATHS, TOTAL_SCORED," +
+                                " MOST_KILLS, MOST_DEATHS, MOST_SCORED," +
+                                " LEAST_DEATHS, WINS, LOSES, TIMES_PLAYED)" +
+                                " VALUES (?, ?, ?, ?, ? ,?, ?, ?, ?, ?, ?, ?);";
+                        PreparedStatement ps = databaseInfo.getConnection().prepareStatement(insertCommand);
+
+                        ps.setString(1, stats.getPlayerUUID().toString());
+                        ps.setString(2, stats.getGameName());
+                        ps.setInt(3, stats.getTotalKills());
+                        ps.setInt(4, stats.getTotalDeaths());
+                        ps.setInt(5, stats.getTotalScored());
+                        ps.setInt(6, stats.getMostKills());
+                        ps.setInt(7, stats.getMostDeaths());
+                        ps.setInt(8, stats.getMostScored());
+                        ps.setInt(9, stats.getLeastDeaths());
+                        ps.setInt(10, stats.getWins());
+                        ps.setInt(11, stats.getLoses());
+                        ps.setInt(12, stats.getTimesPlayed());
+
+                        ps.executeUpdate();
+                        ps.close();
+                        statement.close();
+                        return true;
+                    } else {
+                        //Stats saved, update.
+                        String updateCommand = "UPDATE " + playerStatsTableName +
+                                " SET TOTAL_KILLS='" + stats.getTotalKills() + "', TOTAL_DEATHS='" + stats.getTotalDeaths() +
+                                "', TOTAL_SCORED='" + stats.getTotalScored() + "', MOST_KILLS='" + stats.getMostKills() +
+                                "', MOST_DEATHS='" + stats.getMostDeaths() + "', MOST_SCORED='" + stats.getMostScored() +
+                                "', LEAST_DEATHS='" + stats.getLeastDeaths() + "', WINS='" + stats.getWins() +
+                                "', LOSES='" + stats.getLoses() + "', TIMES_PLAYED='" + stats.getTimesPlayed() +
+                                "' WHERE (PLAYER_UUID='" + stats.getPlayerUUID().toString() + "' AND GAME_NAME='" + stats.getGameName() + "');";
+                        statement.executeUpdate(updateCommand);
+                        statement.close();
+                        return true;
+                    }
+                }
+            } catch (SQLException e) {
+                NovaGamesLib.plugin.getLogger().severe("Failed to input player stats!");
+                if (FileManager.debug()) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Gets the {@link PlayerStats} of the specified player for the corresponding game.
+     * <br><br>
+     *     Fails silently: <br>
+     *     This will return blank (everything = 0) stats should it fail.
+     * @param uuid The UUID of the player whose stats you wish to get.
+     * @param gameName The name of the game that the stats are from.
+     * @return A {@link PlayerStats} object with the player's stats.
+     */
+    public PlayerStats getPlayerStats(UUID uuid, String gameName) {
+       PlayerStats stats = new PlayerStats(uuid, gameName);
+       if (databaseInfo != null) {
+           try {
+               if (databaseInfo.getMySQL().checkConnection()) {
+                   String statsTableName = databaseInfo.getPrefix() + "PLAYER_STATS";
+
+                   Statement statement = databaseInfo.getConnection().createStatement();
+                   String query = "SELECT * FROM " + statsTableName + " WHERE PLAYER_UUID ='" + uuid.toString() + "';";
+                   ResultSet res = statement.executeQuery(query);
+
+                   while (res.next()) {
+                       if (res.getString("GAME_NAME").equalsIgnoreCase(gameName)) {
+                           stats.setTotalKills(res.getInt("TOTAL_KILLS"));
+                           stats.setTotalDeaths(res.getInt("TOTAL_DEATHS"));
+                           stats.setTotalScored(res.getInt("TOTAL_SCORED"));
+
+                           stats.setMostKills(res.getInt("MOST_KILLS"));
+                           stats.setMostDeaths(res.getInt("MOST_DEATHS"));
+                           stats.setMostScored(res.getInt("MOST_SCORED"));
+
+                           stats.setLeastDeaths(res.getInt("LEAST_DEATHS"));
+
+                           stats.setWins(res.getInt("WINS"));
+                           stats.setLoses(res.getInt("LOSES"));
+                           stats.setTimesPlayed(res.getInt("TIMES_PLAYED"));
+                           break;
+                       }
+                   }
+                   statement.close();
+               }
+           } catch (SQLException e) {
+               NovaGamesLib.plugin.getLogger().severe("Failed to retrieve player stats!");
+               if (FileManager.debug()) {
+                   e.printStackTrace();
+               }
+           }
+       }
+       return stats;
+    }
+
     //Private methods
     private void connectToMySQL() {
         if (FileManager.useMySQL()) {
@@ -79,6 +206,9 @@ public class DatabaseManager {
                 }
             } catch (Exception e) {
                 NovaGamesLib.plugin.getLogger().warning("Failed to connect to MySQL database! Is it properly configured?");
+                if (FileManager.debug()) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -92,6 +222,9 @@ public class DatabaseManager {
                 }
             } catch (SQLException e) {
                 NovaGamesLib.plugin.getLogger().warning("MySQL Connection may not have closed properly! Data may be invalidated!");
+                if (FileManager.debug()) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -139,7 +272,10 @@ public class DatabaseManager {
                     NovaGamesLib.plugin.getLogger().info("Successfully created needed tables!");
                 }
             } catch (SQLException e) {
-                NovaGamesLib.plugin.getLogger().info("MySQL Error; Exit code: 00101");
+                NovaGamesLib.plugin.getLogger().info("Failed to create needed MySQL tables!");
+                if (FileManager.debug()) {
+                    e.printStackTrace();
+                }
             }
         }
     }
