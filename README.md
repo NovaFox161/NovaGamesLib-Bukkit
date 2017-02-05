@@ -59,17 +59,17 @@ Directions on how to use it are provided below (currently only Maven is supporte
 ###Maven
 1. Import into pom.xml by inserting the following (where version is your target version):
     ```xml
-       <repository>
-           <id>jitpack.io</id>
-           <url>https://jitpack.io</url>
-       </repository>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
     ```
     ```xml
-        <dependency>
-            <groupId>com.github.NovaFox161</groupId>
-            <artifactId>NovaGamesLib-Bukkit</artifactId>
-            <version>VERSION</version>
-        </dependency>
+    <dependency>
+        <groupId>com.github.NovaFox161</groupId>
+        <artifactId>NovaGamesLib-Bukkit</artifactId>
+        <version>VERSION</version>
+    </dependency>
     ```
 2. Use the JavaDoc provided here: https://novafox161.github.io/NovaGamesLib-Bukkit/Javadocs/
 3. In your main class, in `#OnEnable` add this code (extra code shown for extra help):
