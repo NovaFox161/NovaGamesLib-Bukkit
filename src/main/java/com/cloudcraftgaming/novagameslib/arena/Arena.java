@@ -1,6 +1,7 @@
 package com.cloudcraftgaming.novagameslib.arena;
 
 import com.cloudcraftgaming.novagameslib.game.GameState;
+import com.cloudcraftgaming.novagameslib.game.WinType;
 import com.cloudcraftgaming.novagameslib.player.PlayerStats;
 import com.cloudcraftgaming.novagameslib.scoreboard.BoardManager;
 import com.cloudcraftgaming.novagameslib.team.Team;
@@ -34,6 +35,7 @@ public class Arena {
 	//Scores and stats
 	private final HashMap<UUID, PlayerStats> playerStats = new HashMap<>();
 
+	private WinType winType;
 	private final ArrayList<UUID> winningPlayers = new ArrayList<>();
 	private final ArrayList<Team> winningTeams = new ArrayList<>();
 
@@ -210,6 +212,14 @@ public class Arena {
 	}
 
 	/**
+	 * The WinType of the minigame, in other words the way in which the minigame ended.
+	 * @return The WinTye of the minigame.
+	 */
+	public WinType getWinType() {
+		return winType;
+	}
+
+	/**
 	 * Gets an ArrayList of all players that won.
 	 * @return An ArrayList of all players that won.
 	 */
@@ -319,6 +329,14 @@ public class Arena {
 		} else {
 			playerStats.put(_stats.getPlayerUUID(), _stats);
 		}
+	}
+
+	/**
+	 * Sets the WinType of the minigame, in other words the way in which the game ended.
+	 * @param _winType The WinType of the minigame.
+	 */
+	public void setWinType(WinType _winType) {
+		winType = _winType;
 	}
 
 	/**

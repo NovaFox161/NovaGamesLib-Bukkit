@@ -6,6 +6,7 @@ import com.cloudcraftgaming.novagameslib.arena.ArenaManager;
 import com.cloudcraftgaming.novagameslib.arena.ArenaStatus;
 import com.cloudcraftgaming.novagameslib.database.DatabaseManager;
 import com.cloudcraftgaming.novagameslib.event.minigame.*;
+import com.cloudcraftgaming.novagameslib.mechanics.Rewards;
 import com.cloudcraftgaming.novagameslib.player.PlayerStats;
 import com.cloudcraftgaming.novagameslib.utils.FileManager;
 import org.bukkit.Bukkit;
@@ -155,7 +156,6 @@ public class MinigameEventHandler {
         Arena arena = ArenaManager.getManager().getArena(id);
         if (NovaGamesLib.plugin.getConfig().getString("Stats.Track.Enabled").equalsIgnoreCase("True")) {
             if (arena.getArenaStatus().equals(ArenaStatus.INGAME) || arena.getGameState().equals(GameState.INGAME)) {
-
                 //Calculate stats
                 for (UUID pId : arena.getPlayers()) {
                     PlayerStats oldStats = DatabaseManager.getManager().getPlayerStats(pId, arena.getGameName());
@@ -170,6 +170,9 @@ public class MinigameEventHandler {
                     newStats.calculate(oldStats);
                     DatabaseManager.getManager().addPlayerStats(newStats);
                 }
+
+                //Finish up.
+                Rewards.distrobuteAwards(id);
             }
         }
         MinigameEndEvent event = new MinigameEndEvent(arena);
