@@ -1,5 +1,6 @@
 package com.cloudcraftgaming.novagameslib.arena;
 
+import com.cloudcraftgaming.novagameslib.game.GameGoal;
 import com.cloudcraftgaming.novagameslib.game.GameState;
 import com.cloudcraftgaming.novagameslib.game.WinType;
 import com.cloudcraftgaming.novagameslib.player.PlayerStats;
@@ -30,6 +31,7 @@ public class Arena {
 
 	private ArenaStatus arenaStatus;
 	private GameState gameState;
+	private GameGoal gameGoal;
 	private Boolean joinable;
 
 	//Scores and stats
@@ -124,6 +126,14 @@ public class Arena {
 	 */
 	public GameState getGameState() {
 		return gameState;
+	}
+
+	/**
+	 * Gets the GameGoal of the minigame. In other words the target goal of the game.
+	 * @return The GameGoal of the minigame.
+	 */
+	public GameGoal getGameGoal() {
+		return gameGoal;
 	}
 
 	/**
@@ -267,6 +277,14 @@ public class Arena {
 	 */
 	public void setGameState(GameState _gameState) {
 		gameState = _gameState;
+	}
+
+	/**
+	 * Sets the GameGoal of the minigame. In other words the goal of the game.
+	 * @param _gameGoal The GameGoal of the minigame.
+	 */
+	public void setGameGoal(GameGoal _gameGoal) {
+		gameGoal = _gameGoal;
 	}
 
 	/**
