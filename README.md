@@ -22,6 +22,7 @@ Looking for NovaGamesLib for Bungee Servers? Don't worry! It's in development!
 - Handling of joining/quiting games
 - Tons of custom events for you to listen to to control the game and the player. No longer do you need to implement tons of code for something simple, just listen to an NGL event. In fact, NGL events are just like Bukkit events!!!
 - Fully fledged timer API for controlling wait delays, start delays, game length, and more.
+- Built in rewards handling!! Economy through the Vault API and items (lore and custom values supported!)!!! NGL will cover the tough work for you! Just listen to the events and edit the values as needed, NGL will handle the rest.
 - And much much more!!
 
 ###Stats Tracking
@@ -44,7 +45,6 @@ NGL currently tracks all of the following stats:
 - Total games played
 
 ##Planned and In-Progress Features
-- Built in rewards system.
 - Player inventory back up (with exp saving)
 - Arena GUI selector
 - Kit GUI selector
@@ -59,29 +59,34 @@ Directions on how to use it are provided below (currently only Maven is supporte
 ###Maven
 1. Import into pom.xml by inserting the following (where version is your target version):
     ```xml
-    <repository>
-        <id>jitpack.io</id>
-        <url>https://jitpack.io</url>
-    </repository>
+       <repository>
+           <id>jitpack.io</id>
+           <url>https://jitpack.io</url>
+       </repository>
     ```
+    
     ```xml
-    <dependency>
-        <groupId>com.github.NovaFox161</groupId>
-        <artifactId>NovaGamesLib-Bukkit</artifactId>
-        <version>VERSION</version>
-    </dependency>
+       <dependency>
+           <groupId>com.github.NovaFox161</groupId>
+           <artifactId>NovaGamesLib-Bukkit</artifactId>
+           <version>VERSION</version>
+       </dependency>
     ```
 2. Use the JavaDoc provided here: https://novafox161.github.io/NovaGamesLib-Bukkit/Javadocs/
 3. In your main class, in `#OnEnable` add this code (extra code shown for extra help):
     ```java
        public class Main extends JavaPlugin {
+           com.cloudcraftgaming.novagameslib.NovaGamesLib ngl = null;
            public void onEnable() {
                //Do stuff...
                
                //Add this code:
-               Plugin ngl = plugin.getServer().getPluginManager().getPlugin("NovaGamesLib-Bukkit");
-               if (ngl != null) {
-                   //Check version and do anything else here
+               com.cloudcraftgaming.novagameslib.NovaGamesLib novaGamesLib = plugin.getServer().getPluginManager().getPlugin("NovaGamesLib-Bukkit");
+               if (novaGamesLib != null) {
+                   if (novaGamesLib.getDescription().getVersion().equals("TARGET VERSION")) {
+                       ngl = novaGamesLib;
+                       //Do stuff.
+                   }
                }
                //Do stuff...
            }
