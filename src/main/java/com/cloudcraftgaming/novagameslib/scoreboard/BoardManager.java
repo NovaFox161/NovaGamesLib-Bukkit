@@ -3,7 +3,6 @@ package com.cloudcraftgaming.novagameslib.scoreboard;
 import com.cloudcraftgaming.novagameslib.arena.Arena;
 import com.cloudcraftgaming.novagameslib.arena.ArenaManager;
 import com.cloudcraftgaming.novagameslib.data.ArenaDataManager;
-import com.sun.istack.internal.Nullable;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -168,23 +167,38 @@ public class BoardManager {
 
 	/**
 	 * Adds the player to the scoreboard under the proper team.
+	 * Use {@link #addPlayerToScoreboard(Player)} to add a player to a scoreboard without teams.
 	 * Use {@link #addSpectatorToScoreboard(Player)} to add a spectator to the scoreboard.
 	 * @param player The player to add.
-	 * @param team The team to add them to (can be null if not using teams).
+	 * @param team The team to add them to.
 	 * @return <code>true</code> is successful, else <code>false</code>.
 	 */
-	public Boolean addPlayerToScoreboard(Player player, @Nullable com.cloudcraftgaming.novagameslib.team.Team team) {
-		if (useTeams && team != null) {
+	public Boolean addPlayerToScoreboard(Player player, com.cloudcraftgaming.novagameslib.team.Team team) {
+		if (useTeams) {
 			Team boardTeam = scoreboard.getTeam(team.name());
 			boardTeam.addPlayer(player);
 			updatePlayersBoards();
 			return true;
 		} else {
+			return addPlayerToScoreboard(player);
+		}
+	}
+
+	/**
+	 * Adds the player to the scoreboard, ignoring teams.
+	 * Use {@link #addPlayerToScoreboard(Player, com.cloudcraftgaming.novagameslib.team.Team)} to add a player to a scoreboard with teams.
+	 * Use {@link #addSpectatorToScoreboard(Player)} to add a spectator to the scoreboard.
+	 * @param player The player to add.
+	 * @return <code>true</code> if successful, else <code>false</code>.
+	 */
+	public Boolean addPlayerToScoreboard(Player player) {
+		if (!useTeams) {
 			Team allPlayersTeam = scoreboard.getTeam("allPlayers");
 			allPlayersTeam.addPlayer(player);
 			updatePlayersBoards();
 			return true;
 		}
+		return false;
 	}
 
 	/**
@@ -203,23 +217,38 @@ public class BoardManager {
 
 	/**
 	 * Removes the player from the scoreboard.
+	 * Use {@link #removePlayerFromScoreboard(Player)} to remove a player without a team.
 	 * Use {@link #removeSpectatorFromBoard(Player)} to remove a spectator rather than a player.
 	 * @param player The player to remove.
-	 * @param team The team to remove them from (can be null if not using teams).
+	 * @param team The team to remove them from.
 	 * @return <code>true</code> if successful, else <code>false</code>.
 	 */
-	public Boolean removePlayerFromScoreboard(Player player, @Nullable com.cloudcraftgaming.novagameslib.team.Team team) {
-		if (useTeams && team != null) {
+	public Boolean removePlayerFromScoreboard(Player player, com.cloudcraftgaming.novagameslib.team.Team team) {
+		if (useTeams) {
 			Team boardTeam = scoreboard.getTeam(team.name());
 			boardTeam.removePlayer(player);
 			player.setScoreboard(sbManager.getNewScoreboard());
 			updatePlayersBoards();
 			return true;
 		} else {
+			return removePlayerFromScoreboard(player);
+		}
+	}
+
+	/**
+	 * Removes the player from the scoreboard ignoring teams.
+	 * Use {@link #removePlayerFromScoreboard(Player, com.cloudcraftgaming.novagameslib.team.Team)} to remove from a specific team.
+	 * Use {@link #removeSpectatorFromBoard(Player)} to remove a spectator rather than a player.
+	 * @param player The player to remove.
+	 * @return <code>true</code> if successful, else <code>false</code>.
+	 */
+	public Boolean removePlayerFromScoreboard(Player player) {
+		if (!useTeams) {
 			Team allPlayersTeam = scoreboard.getTeam("allPlayers");
 			allPlayersTeam.removePlayer(player);
 			updatePlayersBoards();
 			return true;
 		}
+		return false;
 	}
 }

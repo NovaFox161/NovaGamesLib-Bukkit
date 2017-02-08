@@ -1,7 +1,5 @@
 package com.cloudcraftgaming.novagameslib.kit;
 
-import com.sun.istack.internal.Nullable;
-
 /**
  * Created by Nova Fox on 1/12/17.
  * Website: www.cloudcraftgaming.com
@@ -13,16 +11,23 @@ public class KitResponse {
 
     /**
      * Creates a new KitResponse Object for sending detailed info about a kit operation.
+     * Use {@link #KitResponse(Boolean, KitFailureReason)} if a specific failure reason exists!
      * @param _successful Whether or not the operation was successful.
-     * @param _reason If the operation failed, the reason why, else <code>null</code>.
      */
-    public KitResponse(Boolean _successful, @Nullable KitFailureReason _reason) {
+    public KitResponse(Boolean _successful) {
         successful = _successful;
-        if (_reason != null) {
-            reason = _reason;
-        } else {
-            reason = KitFailureReason.NONE;
-        }
+        reason = KitFailureReason.NONE;
+    }
+
+    /**
+     * Creates a new KitResponse Object for sending detailed info about a kit operation.
+     * Use {@link #KitResponse(Boolean)} if there is no reason for failure or did not fail!
+     * @param _successful Whether or not the operation was successful.
+     * @param _reason If the operation failed, the reason why.
+     */
+    public KitResponse(Boolean _successful, KitFailureReason _reason) {
+        successful = _successful;
+        reason = _reason;
     }
 
     /**
