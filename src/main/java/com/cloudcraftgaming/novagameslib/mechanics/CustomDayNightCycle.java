@@ -5,7 +5,6 @@ import com.cloudcraftgaming.novagameslib.arena.ArenaManager;
 import com.cloudcraftgaming.novagameslib.data.ArenaDataManager;
 import com.cloudcraftgaming.novagameslib.event.mechanics.WorldTimeUpdateEvent;
 import com.cloudcraftgaming.novagameslib.time.TimeManager;
-import com.sun.istack.internal.Nullable;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -34,12 +33,35 @@ public class CustomDayNightCycle {
 
     /**
      * Starts the custom day light cycle for the specified arena.
+     * Use {@link #startCustomDayLightCycle(int, Long)} to add a time override!
      * Only call this once (at the start of the game)!!! Once called, NovaGames will handle the rest!
      * !!!! DO NOT USE IF MORE THAN ONE (1) ARENA IS IN THE SAME WORLD !!!!
      * @param id The id of the arena.
-     * @param timeOverride The Bukkit time to set the world to (in ticks). If null, will set to <code>12000</code>.
      */
-    public void startCustomDayLightCycle(int id, @Nullable Long timeOverride) {
+    public void startCustomDayLightCycle(int id) {
+        if (ArenaManager.getManager().arenaLoaded(id)) {
+            Arena arena = ArenaManager.getManager().getArena(id);
+            Location arenaLoc = ArenaDataManager.getMainSpawnLocation(id);
+            arenaLoc.getWorld().setTime(12000);
+            if (worldTimes.containsKey(arenaLoc.getWorld().getName())) {
+                worldTimes.remove(arenaLoc.getWorld().getName());
+            }
+            worldTimes.put(arenaLoc.getWorld().getName(), arenaLoc.getWorld().getTime());
+
+            //Call TimerManager to start the custom world time clock.
+            TimeManager.getManager().startCustomWorldTime(id, arena.getGameId());
+        }
+    }
+
+    /**
+     * Starts the custom day light cycle for the specified arena.
+     * Use {@link #startCustomDayLightCycle(int)} if no time override is to be used, default is <code>12000</code> ticks.
+     * Only call this once (at the start of the game)!!! Once called, NovaGames will handle the rest!
+     * !!!! DO NOT USE IF MORE THAN ONE (1) ARENA IS IN THE SAME WORLD !!!!
+     * @param id The id of the arena.
+     * @param timeOverride The Bukkit time to set the world to (in ticks). Default is  <code>12000</code> ticks.
+     */
+    public void startCustomDayLightCycle(int id, Long timeOverride) {
         if (ArenaManager.getManager().arenaLoaded(id)) {
             Arena arena = ArenaManager.getManager().getArena(id);
             Location arenaLoc = ArenaDataManager.getMainSpawnLocation(id);
