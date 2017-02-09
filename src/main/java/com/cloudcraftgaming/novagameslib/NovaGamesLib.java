@@ -115,4 +115,20 @@ public class NovaGamesLib extends JavaPlugin {
         econ = rsp.getProvider();
         return econ != null;
     }
+
+    //Some public stuffs.
+
+    /**
+     *
+     * @param minigameHandler The Plugin handling the registered minigame.
+     * @param gameName The name of the minigame.
+     * @return <code>true</code> if successful, else <code>false</code>.
+     */
+    @SuppressWarnings("unused")
+    public Boolean registerMinigame(Plugin minigameHandler, String gameName) {
+        this.getLogger().info("Registering new Minigame: " + gameName + "...");
+
+        minigameHandler.getLogger().info("Registered " + gameName + " with NovaGamesLib-Bukkit!");
+        return false;
+    }
 }
