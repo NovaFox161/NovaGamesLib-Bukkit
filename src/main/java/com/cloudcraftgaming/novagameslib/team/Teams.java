@@ -1,6 +1,6 @@
 package com.cloudcraftgaming.novagameslib.team;
 
-import com.cloudcraftgaming.novagameslib.arena.Arena;
+import com.cloudcraftgaming.novagameslib.arena.ArenaBase;
 import com.cloudcraftgaming.novagameslib.arena.ArenaManager;
 import org.bukkit.Bukkit;
 import org.bukkit.scoreboard.Scoreboard;
@@ -134,8 +134,8 @@ public class Teams {
 	 */
 	public List<UUID> getPlayersOnTeam(Team team) {
 		List<UUID> playersOnTeam = new ArrayList<>();
-		Arena arena = ArenaManager.getManager().getArena(this.id);
-		for (UUID pId : arena.getPlayers()) {
+		ArenaBase arenaBase = ArenaManager.getManager().getArena(this.id);
+		for (UUID pId : arenaBase.getPlayers()) {
 			if (getTeam(pId).equals(team)) {
 				playersOnTeam.add(pId);
 			}

@@ -1,7 +1,7 @@
 package com.cloudcraftgaming.novagameslib.mechanics;
 
 import com.cloudcraftgaming.novagameslib.NovaGamesLib;
-import com.cloudcraftgaming.novagameslib.arena.Arena;
+import com.cloudcraftgaming.novagameslib.arena.ArenaBase;
 import com.cloudcraftgaming.novagameslib.arena.ArenaManager;
 import com.cloudcraftgaming.novagameslib.event.mechanics.RewardEconomyEvent;
 import com.cloudcraftgaming.novagameslib.event.mechanics.RewardItemEvent;
@@ -41,14 +41,14 @@ public class Rewards {
     public static Boolean econAwards(Integer id) {
         if (NovaGamesLib.econ != null) {
             if (ArenaManager.getManager().arenaLoaded(id)) {
-                Arena a = ArenaManager.getManager().getArena(id);
+                ArenaBase a = ArenaManager.getManager().getArena(id);
                 RewardEconomyEvent event = new RewardEconomyEvent(id, a.getWinType(), 100.0);
                 Bukkit.getServer().getPluginManager().callEvent(event);
 
                 if (!event.isCancelled()) {
                     if (event.getAmount() > 0) {
-                        Arena arena = ArenaManager.getManager().getArena(id);
-                        for (UUID pId : arena.getWinningPlayers()) {
+                        ArenaBase arenaBase = ArenaManager.getManager().getArena(id);
+                        for (UUID pId : arenaBase.getWinningPlayers()) {
                             OfflinePlayer offlineP = Bukkit.getOfflinePlayer(pId);
                             NovaGamesLib.econ.depositPlayer(offlineP, event.getAmount());
                         }
@@ -61,14 +61,14 @@ public class Rewards {
 
     public static Boolean itemAwards(Integer id) {
         if (ArenaManager.getManager().arenaLoaded(id)) {
-            Arena a = ArenaManager.getManager().getArena(id);
+            ArenaBase a = ArenaManager.getManager().getArena(id);
             RewardItemEvent event = new RewardItemEvent(id, a.getWinType(), new ItemStack(Material.DIAMOND, 1));
             Bukkit.getServer().getPluginManager().callEvent(event);
 
             if (!event.isCancelled()) {
                 if (event.getItemStack() != null && event.getItemStack().getAmount() > 0) {
-                    Arena arena = ArenaManager.getManager().getArena(id);
-                    for (UUID pId : arena.getWinningPlayers()) {
+                    ArenaBase arenaBase = ArenaManager.getManager().getArena(id);
+                    for (UUID pId : arenaBase.getWinningPlayers()) {
                         Player p = Bukkit.getPlayer(pId);
                         p.getInventory().setItem(p.getInventory().firstEmpty(), event.getItemStack());
                     }

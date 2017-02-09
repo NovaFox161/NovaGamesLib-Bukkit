@@ -1,7 +1,7 @@
 package com.cloudcraftgaming.novagameslib.listener;
 
 import com.cloudcraftgaming.novagameslib.NovaGamesLib;
-import com.cloudcraftgaming.novagameslib.arena.Arena;
+import com.cloudcraftgaming.novagameslib.arena.ArenaBase;
 import com.cloudcraftgaming.novagameslib.arena.ArenaManager;
 import com.cloudcraftgaming.novagameslib.player.PlayerStats;
 import org.bukkit.entity.Player;
@@ -21,17 +21,17 @@ public class PlayerDeathListener implements Listener {
     public void onPlayerDeath(PlayerDeathEvent event) {
         Player player = event.getEntity();
         if (ArenaManager.getManager().isInGame(player)) {
-            Arena arena = ArenaManager.getManager().getArena(player);
+            ArenaBase arenaBase = ArenaManager.getManager().getArena(player);
             if (NovaGamesLib.plugin.getConfig().getString("Stats.Track.Enabled").equalsIgnoreCase("True")) {
                 if (NovaGamesLib.plugin.getConfig().getString("Stats.Track.Deaths").equalsIgnoreCase("True")) {
-                    PlayerStats stats = arena.getPlayerStats(player.getUniqueId());
+                    PlayerStats stats = arenaBase.getPlayerStats(player.getUniqueId());
                     stats.setMostDeaths(stats.getMostDeaths() + 1);
                     stats.setLeastDeaths(stats.getLeastDeaths() + 1);
                     stats.setTotalDeaths(stats.getTotalDeaths() + 1);
                 }
                 if (NovaGamesLib.plugin.getConfig().getString("Stats.Track.Kills").equalsIgnoreCase("True")) {
                     if (player.getKiller() != null) {
-                        PlayerStats stats = arena.getPlayerStats(player.getUniqueId());
+                        PlayerStats stats = arenaBase.getPlayerStats(player.getUniqueId());
                         stats.setMostKills(stats.getMostKills() + 1);
                         stats.setTotalKills(stats.getTotalKills() + 1);
                     }

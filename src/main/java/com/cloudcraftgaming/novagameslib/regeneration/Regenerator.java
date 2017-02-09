@@ -1,7 +1,7 @@
 package com.cloudcraftgaming.novagameslib.regeneration;
 
 import com.cloudcraftgaming.novagameslib.NovaGamesLib;
-import com.cloudcraftgaming.novagameslib.arena.Arena;
+import com.cloudcraftgaming.novagameslib.arena.ArenaBase;
 import com.cloudcraftgaming.novagameslib.arena.ArenaManager;
 import com.cloudcraftgaming.novagameslib.arena.ArenaStatus;
 import com.cloudcraftgaming.novagameslib.data.ArenaDataManager;
@@ -132,9 +132,9 @@ public class Regenerator {
                 NovaGamesLib.plugin.getLogger().info("Starting regeneration of arena id: " + id);
                 NovaGamesLib.plugin.getLogger().info("This may take some time depending on arena size (Sorry!).");
             }
-            Arena arena = ArenaManager.getManager().getArena(id);
-            arena.setArenaStatus(ArenaStatus.REGENERATING);
-            arena.setJoinable(false);
+            ArenaBase arenaBase = ArenaManager.getManager().getArena(id);
+            arenaBase.setArenaStatus(ArenaStatus.REGENERATING);
+            arenaBase.setJoinable(false);
             //ArenaDataManager.updateArenaInfo(id);
 
             Cuboid regenArea = ArenaDataManager.getRegenArea(id);

@@ -1,6 +1,6 @@
 package com.cloudcraftgaming.novagameslib.event.minigame;
 
-import com.cloudcraftgaming.novagameslib.arena.Arena;
+import com.cloudcraftgaming.novagameslib.arena.ArenaBase;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -15,20 +15,20 @@ public class MinigameStartEvent extends Event implements Cancellable {
     private final Integer id;
     private final String gameName;
 
-    private Arena arena;
+    private ArenaBase arenaBase;
 
     private boolean cancelled;
     private static final HandlerList handlers = new HandlerList();
 
     /**
      * Constructor  for MinigameStartEvent
-     * @param _arena The arena in which a game is starting.
+     * @param _arenaBase The arena in which a game is starting.
      */
-    public MinigameStartEvent(Arena _arena) {
-        id = _arena.getId();
-        gameName = _arena.getGameName();
+    public MinigameStartEvent(ArenaBase _arenaBase) {
+        id = _arenaBase.getId();
+        gameName = _arenaBase.getGameName();
 
-        arena = _arena;
+        arenaBase = _arenaBase;
     }
 
     /**
@@ -54,8 +54,8 @@ public class MinigameStartEvent extends Event implements Cancellable {
      *
      * @return The arena involved in this event.
      */
-    public Arena getArena() {
-        return arena;
+    public ArenaBase getArenaBase() {
+        return arenaBase;
     }
 
     /**

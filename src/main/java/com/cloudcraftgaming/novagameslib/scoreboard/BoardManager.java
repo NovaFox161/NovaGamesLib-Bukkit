@@ -1,6 +1,6 @@
 package com.cloudcraftgaming.novagameslib.scoreboard;
 
-import com.cloudcraftgaming.novagameslib.arena.Arena;
+import com.cloudcraftgaming.novagameslib.arena.ArenaBase;
 import com.cloudcraftgaming.novagameslib.arena.ArenaManager;
 import com.cloudcraftgaming.novagameslib.data.ArenaDataManager;
 import org.bukkit.Bukkit;
@@ -143,11 +143,11 @@ public class BoardManager {
 	 * Scoreboards will not reflect changes until this method is called!
 	 */
 	public void updatePlayersBoards() {
-		Arena arena = ArenaManager.getManager().getArena(id);
-		for (UUID pId : arena.getPlayers()) {
+		ArenaBase arenaBase = ArenaManager.getManager().getArena(id);
+		for (UUID pId : arenaBase.getPlayers()) {
 			Bukkit.getPlayer(pId).setScoreboard(scoreboard);
 		}
-		for (UUID pId : arena.getSpectators()) {
+		for (UUID pId : arenaBase.getSpectators()) {
 			Bukkit.getPlayer(pId).setScoreboard(scoreboard);
 		}
 	}

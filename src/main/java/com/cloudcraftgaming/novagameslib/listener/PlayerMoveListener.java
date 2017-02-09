@@ -1,6 +1,6 @@
 package com.cloudcraftgaming.novagameslib.listener;
 
-import com.cloudcraftgaming.novagameslib.arena.Arena;
+import com.cloudcraftgaming.novagameslib.arena.ArenaBase;
 import com.cloudcraftgaming.novagameslib.arena.ArenaManager;
 import com.cloudcraftgaming.novagameslib.data.ArenaDataManager;
 import org.bukkit.GameMode;
@@ -22,9 +22,9 @@ public class PlayerMoveListener implements Listener {
     public void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
         if (ArenaManager.getManager().isInGame(player)) {
-            Arena arena = ArenaManager.getManager().getArena(player);
-            if (!player.getGameMode().equals(ArenaDataManager.getGameMode(arena.getId()))) {
-                player.setGameMode(ArenaDataManager.getGameMode(arena.getId()));
+            ArenaBase arenaBase = ArenaManager.getManager().getArena(player);
+            if (!player.getGameMode().equals(ArenaDataManager.getGameMode(arenaBase.getId()))) {
+                player.setGameMode(ArenaDataManager.getGameMode(arenaBase.getId()));
             }
         } else if (ArenaManager.getManager().isSpectating(player)) {
             if (!player.getGameMode().equals(GameMode.SPECTATOR)) {

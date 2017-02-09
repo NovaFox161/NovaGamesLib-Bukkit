@@ -1,7 +1,7 @@
 package com.cloudcraftgaming.novagameslib.game;
 
 import com.cloudcraftgaming.novagameslib.NovaGamesLib;
-import com.cloudcraftgaming.novagameslib.arena.Arena;
+import com.cloudcraftgaming.novagameslib.arena.ArenaBase;
 import com.cloudcraftgaming.novagameslib.arena.ArenaManager;
 import com.cloudcraftgaming.novagameslib.arena.ArenaStatus;
 import com.cloudcraftgaming.novagameslib.database.DatabaseManager;
@@ -32,9 +32,9 @@ public class MinigameEventHandler {
      */
     public static Boolean joinMinigame(Player player, int id) {
         if (ArenaManager.getManager().arenaLoaded(id)) {
-            Arena arena = ArenaManager.getManager().getArena(id);
-            arena.getPlayers().add(player.getUniqueId());
-            arena.setPlayerCount(arena.getPlayerCount() + 1);
+            ArenaBase arenaBase = ArenaManager.getManager().getArena(id);
+            arenaBase.getPlayers().add(player.getUniqueId());
+            arenaBase.setPlayerCount(arenaBase.getPlayerCount() + 1);
             MinigameJoinEvent event = new MinigameJoinEvent(player, id);
             Bukkit.getServer().getPluginManager().callEvent(event);
 
@@ -43,13 +43,13 @@ public class MinigameEventHandler {
                 if (FileManager.verbose()) {
                     plugin.getLogger().info(player.getName() + " has joined arena " + id);
                 }
-                arena.setPlayerStats(new PlayerStats(player.getUniqueId(), arena.getGameName()), false);
+                arenaBase.setPlayerStats(new PlayerStats(player.getUniqueId(), arenaBase.getGameName()), false);
                 return true;
             } else {
-                if (arena.getPlayers().contains(player.getUniqueId())) {
-                    arena.getPlayers().remove(player.getUniqueId());
+                if (arenaBase.getPlayers().contains(player.getUniqueId())) {
+                    arenaBase.getPlayers().remove(player.getUniqueId());
                 }
-                arena.setPlayerCount(arena.getPlayerCount() - 1);
+                arenaBase.setPlayerCount(arenaBase.getPlayerCount() - 1);
             }
         }
         return false;
@@ -64,8 +64,8 @@ public class MinigameEventHandler {
      */
     public static Boolean spectateMinigame(Player player, int id) {
         if (ArenaManager.getManager().arenaLoaded(id)) {
-            Arena arena = ArenaManager.getManager().getArena(id);
-            arena.getSpectators().add(player.getUniqueId());
+            ArenaBase arenaBase = ArenaManager.getManager().getArena(id);
+            arenaBase.getSpectators().add(player.getUniqueId());
             MinigameSpectateEvent event = new MinigameSpectateEvent(player, id);
             Bukkit.getServer().getPluginManager().callEvent(event);
 
@@ -75,8 +75,8 @@ public class MinigameEventHandler {
                 }
                 return true;
             } else {
-                if (arena.getSpectators().contains(player.getUniqueId())) {
-                    arena.getSpectators().remove(player.getUniqueId());
+                if (arenaBase.getSpectators().contains(player.getUniqueId())) {
+                    arenaBase.getSpectators().remove(player.getUniqueId());
                 }
             }
         }
@@ -90,21 +90,21 @@ public class MinigameEventHandler {
      * @return <code>true</code> if not cancelled and successful, else <code>false</code>.
      */
     public static Boolean quitMinigame(Player player) {
-        Arena arena = ArenaManager.getManager().getArena(player);
-        MinigameQuitEvent event = new MinigameQuitEvent(player, arena.getId());
+        ArenaBase arenaBase = ArenaManager.getManager().getArena(player);
+        MinigameQuitEvent event = new MinigameQuitEvent(player, arenaBase.getId());
         Bukkit.getServer().getPluginManager().callEvent(event);
 
-        if (arena.getPlayers().contains(player.getUniqueId())) {
-            arena.getPlayers().remove(player.getUniqueId());
-            arena.setPlayerCount(arena.getPlayerCount() - 1);
+        if (arenaBase.getPlayers().contains(player.getUniqueId())) {
+            arenaBase.getPlayers().remove(player.getUniqueId());
+            arenaBase.setPlayerCount(arenaBase.getPlayerCount() - 1);
             if (FileManager.verbose()) {
-                plugin.getLogger().info(player.getName() + " has quit arena " + arena.getId());
+                plugin.getLogger().info(player.getName() + " has quit arena " + arenaBase.getId());
             }
             if (NovaGamesLib.plugin.getConfig().getString("Stats.Track.Enabled").equalsIgnoreCase("True")) {
-                if (arena.getArenaStatus().equals(ArenaStatus.INGAME) || arena.getGameState().equals(GameState.INGAME)) {
+                if (arenaBase.getArenaStatus().equals(ArenaStatus.INGAME) || arenaBase.getGameState().equals(GameState.INGAME)) {
                     UUID uuid = player.getUniqueId();
-                    PlayerStats oldStats = DatabaseManager.getManager().getPlayerStats(uuid, arena.getGameName());
-                    PlayerStats newStats = arena.getPlayerStats(uuid);
+                    PlayerStats oldStats = DatabaseManager.getManager().getPlayerStats(uuid, arenaBase.getGameName());
+                    PlayerStats newStats = arenaBase.getPlayerStats(uuid);
 
                     //Player quit, lost by default.
                     newStats.setLoses(1);
@@ -113,10 +113,10 @@ public class MinigameEventHandler {
                     DatabaseManager.getManager().addPlayerStats(newStats);
                 }
             }
-        } else if (arena.getSpectators().contains(player.getUniqueId())) {
-            arena.getSpectators().remove(player.getUniqueId());
+        } else if (arenaBase.getSpectators().contains(player.getUniqueId())) {
+            arenaBase.getSpectators().remove(player.getUniqueId());
             if (FileManager.verbose()) {
-                plugin.getLogger().info(player.getName() + "no longer spectating arena " + arena.getId());
+                plugin.getLogger().info(player.getName() + "no longer spectating arena " + arenaBase.getId());
             }
         }
         return true;
@@ -137,10 +137,10 @@ public class MinigameEventHandler {
                 plugin.getLogger().info("Minigame in arena " + id + " has started.");
             }
             //ArenaDataManager.updateArenaInfo(id);
-            for (UUID pId : event.getArena().getPlayers()) {
+            for (UUID pId : event.getArenaBase().getPlayers()) {
                 PlayerStats newStats = new PlayerStats(pId, event.getGameName());
                 newStats.setTimesPlayed(1);
-                event.getArena().setPlayerStats(newStats);
+                event.getArenaBase().setPlayerStats(newStats);
             }
         }
         return false;
@@ -153,16 +153,16 @@ public class MinigameEventHandler {
      * @return <code>true</code> if not cancelled and successful, else <code>false</code>.
      */
     public static Boolean endMinigame(Integer id) {
-        Arena arena = ArenaManager.getManager().getArena(id);
+        ArenaBase arenaBase = ArenaManager.getManager().getArena(id);
         if (NovaGamesLib.plugin.getConfig().getString("Stats.Track.Enabled").equalsIgnoreCase("True")) {
-            if (arena.getArenaStatus().equals(ArenaStatus.INGAME) || arena.getGameState().equals(GameState.INGAME)) {
+            if (arenaBase.getArenaStatus().equals(ArenaStatus.INGAME) || arenaBase.getGameState().equals(GameState.INGAME)) {
                 //Calculate stats
-                for (UUID pId : arena.getPlayers()) {
-                    PlayerStats oldStats = DatabaseManager.getManager().getPlayerStats(pId, arena.getGameName());
-                    PlayerStats newStats = arena.getPlayerStats(pId);
+                for (UUID pId : arenaBase.getPlayers()) {
+                    PlayerStats oldStats = DatabaseManager.getManager().getPlayerStats(pId, arenaBase.getGameName());
+                    PlayerStats newStats = arenaBase.getPlayerStats(pId);
 
                     //Check wins, as they are already calculated by this point in time.
-                    if (arena.getWinningPlayers().contains(pId)) {
+                    if (arenaBase.getWinningPlayers().contains(pId)) {
                         newStats.setWins(1);
                     } else {
                         newStats.setLoses(1);
@@ -175,7 +175,7 @@ public class MinigameEventHandler {
                 Rewards.distrobuteAwards(id);
             }
         }
-        MinigameEndEvent event = new MinigameEndEvent(arena);
+        MinigameEndEvent event = new MinigameEndEvent(arenaBase);
         Bukkit.getServer().getPluginManager().callEvent(event);
         if (FileManager.verbose()) {
             NovaGamesLib.plugin.getLogger().info("Minigame in arena " + id + " has ended.");

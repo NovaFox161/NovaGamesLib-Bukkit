@@ -1,6 +1,6 @@
 package com.cloudcraftgaming.novagameslib.event.time;
 
-import com.cloudcraftgaming.novagameslib.arena.Arena;
+import com.cloudcraftgaming.novagameslib.arena.ArenaBase;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
@@ -14,7 +14,7 @@ public class GameTimerEndEvent extends Event {
     private final Integer id;
     private final String gameName;
 
-    private Arena arena;
+    private ArenaBase arenaBase;
     private Boolean endGameBool;
 
     private static final HandlerList handlers = new HandlerList();
@@ -22,14 +22,14 @@ public class GameTimerEndEvent extends Event {
     /**
      * Constructor for GameTimerEndEvent
      *
-     * @param _arena      The arena that is involved in this event.
+     * @param _arenaBase      The arena that is involved in this event.
      */
-    public GameTimerEndEvent(Arena _arena) {
-        arena = _arena;
+    public GameTimerEndEvent(ArenaBase _arenaBase) {
+        arenaBase = _arenaBase;
         endGameBool = true;
 
-        id = arena.getId();
-        gameName = arena.getGameName();
+        id = arenaBase.getId();
+        gameName = arenaBase.getGameName();
     }
 
     /**
@@ -55,8 +55,8 @@ public class GameTimerEndEvent extends Event {
      *
      * @return The arena involved in this event.
      */
-    public Arena getArena() {
-        return arena;
+    public ArenaBase getArenaBase() {
+        return arenaBase;
     }
 
     /**

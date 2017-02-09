@@ -1,6 +1,6 @@
 package com.cloudcraftgaming.novagameslib.event.time;
 
-import com.cloudcraftgaming.novagameslib.arena.Arena;
+import com.cloudcraftgaming.novagameslib.arena.ArenaBase;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -15,7 +15,7 @@ public class GameTimerStartEvent extends Event implements Cancellable {
     private final Integer id;
     private final String gameName;
 
-    private Arena arena;
+    private ArenaBase arenaBase;
     private Integer gameLength;
 
     private boolean cancelled;
@@ -24,15 +24,15 @@ public class GameTimerStartEvent extends Event implements Cancellable {
     /**
      * Constructor for GameTimerStartEvent
      *
-     * @param _arena      The arena that is involved in this event.
+     * @param _arenaBase      The arena that is involved in this event.
      * @param _gameLength The game length (in minutes).
      */
-    public GameTimerStartEvent(Arena _arena, Integer _gameLength) {
-        arena = _arena;
+    public GameTimerStartEvent(ArenaBase _arenaBase, Integer _gameLength) {
+        arenaBase = _arenaBase;
         gameLength = _gameLength;
 
-        id = arena.getId();
-        gameName = arena.getGameName();
+        id = arenaBase.getId();
+        gameName = arenaBase.getGameName();
     }
 
     /**
@@ -58,8 +58,8 @@ public class GameTimerStartEvent extends Event implements Cancellable {
      *
      * @return The arena involved in this event.
      */
-    public Arena getArena() {
-        return arena;
+    public ArenaBase getArenaBase() {
+        return arenaBase;
     }
 
     /**
