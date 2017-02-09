@@ -117,16 +117,15 @@ public class NovaGamesLib extends JavaPlugin {
     }
 
     //Some public stuffs.
-
     /**
-     *
+     * Use this to register your minigame with NGL in your plugin's onEnable method.
      * @param minigameHandler The Plugin handling the registered minigame.
      * @param gameName The name of the minigame.
      * @return <code>true</code> if successful, else <code>false</code>.
      */
     @SuppressWarnings("unused")
-    public Boolean registerMinigame(Plugin minigameHandler, String gameName) {
-        this.getLogger().info("Registering new Minigame: " + gameName + "...");
+    public static Boolean registerMinigame(Plugin minigameHandler, String gameName) {
+        plugin.getLogger().info("Registering new Minigame: " + gameName + "...");
 
         minigameHandler.getLogger().info("Registered " + gameName + " with NovaGamesLib-Bukkit!");
         return false;
