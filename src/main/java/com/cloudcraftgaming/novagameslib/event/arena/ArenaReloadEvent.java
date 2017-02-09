@@ -1,6 +1,6 @@
 package com.cloudcraftgaming.novagameslib.event.arena;
 
-import com.cloudcraftgaming.novagameslib.arena.Arena;
+import com.cloudcraftgaming.novagameslib.arena.IArena;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -15,7 +15,7 @@ public class ArenaReloadEvent extends Event implements Cancellable {
 	private final Integer arenaId;
 	private final String gameName;
 
-	private Arena arena;
+	private IArena arena;
 
 	private Boolean letNovaGamesHandle;
 
@@ -39,7 +39,7 @@ public class ArenaReloadEvent extends Event implements Cancellable {
 	 *
 	 * @param _arena The ArenaObject to reload.
 	 */
-	public ArenaReloadEvent(Arena _arena) {
+	public ArenaReloadEvent(IArena _arena) {
 		arenaId = _arena.getId();
 		gameName = _arena.getGameName();
 		arena = _arena;
@@ -69,7 +69,7 @@ public class ArenaReloadEvent extends Event implements Cancellable {
 	 *
 	 * @return The Arena Object for this event.
 	 */
-	public Arena getArena() {
+	public IArena getArena() {
 		return arena;
 	}
 
@@ -99,7 +99,7 @@ public class ArenaReloadEvent extends Event implements Cancellable {
 	 *
 	 * @param _arena The Arena for this event.
 	 */
-	public void setArena(Arena _arena) {
+	public void setArenaBase(IArena _arena) {
 		arena = _arena;
 	}
 

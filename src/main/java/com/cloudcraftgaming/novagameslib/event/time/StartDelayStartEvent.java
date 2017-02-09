@@ -1,6 +1,6 @@
 package com.cloudcraftgaming.novagameslib.event.time;
 
-import com.cloudcraftgaming.novagameslib.arena.Arena;
+import com.cloudcraftgaming.novagameslib.arena.ArenaBase;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -15,7 +15,7 @@ public class StartDelayStartEvent extends Event implements Cancellable {
     private final Integer id;
     private final String gameName;
 
-    private Arena arena;
+    private ArenaBase arenaBase;
     private Integer startDelay;
     private Boolean goToGameStartBool;
 
@@ -24,16 +24,16 @@ public class StartDelayStartEvent extends Event implements Cancellable {
 
     /**
      * Constructor for StartDelayStartEvent
-     * @param _arena The arena that is involved in this event.
+     * @param _arenaBase The arena that is involved in this event.
      * @param _startDelay The start delay (in seconds).
      */
-    public StartDelayStartEvent(Arena _arena, Integer _startDelay) {
-        arena = _arena;
+    public StartDelayStartEvent(ArenaBase _arenaBase, Integer _startDelay) {
+        arenaBase = _arenaBase;
         startDelay = _startDelay;
         goToGameStartBool = true;
 
-        id = arena.getId();
-        gameName = arena.getGameName();
+        id = arenaBase.getId();
+        gameName = arenaBase.getGameName();
     }
 
     /**
@@ -56,8 +56,8 @@ public class StartDelayStartEvent extends Event implements Cancellable {
      * Gets the arena involved in this event.
      * @return The arena involved in this event.
      */
-    public Arena getArena() {
-        return arena;
+    public ArenaBase getArenaBase() {
+        return arenaBase;
     }
 
     /**

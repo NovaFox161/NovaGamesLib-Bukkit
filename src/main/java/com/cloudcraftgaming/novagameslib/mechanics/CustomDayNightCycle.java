@@ -1,6 +1,6 @@
 package com.cloudcraftgaming.novagameslib.mechanics;
 
-import com.cloudcraftgaming.novagameslib.arena.Arena;
+import com.cloudcraftgaming.novagameslib.arena.ArenaBase;
 import com.cloudcraftgaming.novagameslib.arena.ArenaManager;
 import com.cloudcraftgaming.novagameslib.data.ArenaDataManager;
 import com.cloudcraftgaming.novagameslib.event.mechanics.WorldTimeUpdateEvent;
@@ -40,7 +40,7 @@ public class CustomDayNightCycle {
      */
     public void startCustomDayLightCycle(int id) {
         if (ArenaManager.getManager().arenaLoaded(id)) {
-            Arena arena = ArenaManager.getManager().getArena(id);
+            ArenaBase arenaBase = ArenaManager.getManager().getArena(id);
             Location arenaLoc = ArenaDataManager.getMainSpawnLocation(id);
             arenaLoc.getWorld().setTime(12000);
             if (worldTimes.containsKey(arenaLoc.getWorld().getName())) {
@@ -49,7 +49,7 @@ public class CustomDayNightCycle {
             worldTimes.put(arenaLoc.getWorld().getName(), arenaLoc.getWorld().getTime());
 
             //Call TimerManager to start the custom world time clock.
-            TimeManager.getManager().startCustomWorldTime(id, arena.getGameId());
+            TimeManager.getManager().startCustomWorldTime(id, arenaBase.getGameId());
         }
     }
 
@@ -63,7 +63,7 @@ public class CustomDayNightCycle {
      */
     public void startCustomDayLightCycle(int id, Long timeOverride) {
         if (ArenaManager.getManager().arenaLoaded(id)) {
-            Arena arena = ArenaManager.getManager().getArena(id);
+            ArenaBase arenaBase = ArenaManager.getManager().getArena(id);
             Location arenaLoc = ArenaDataManager.getMainSpawnLocation(id);
             if (timeOverride == null) {
                 arenaLoc.getWorld().setTime(12000);
@@ -76,7 +76,7 @@ public class CustomDayNightCycle {
             worldTimes.put(arenaLoc.getWorld().getName(), arenaLoc.getWorld().getTime());
 
             //Call TimerManager to start the custom world time clock.
-            TimeManager.getManager().startCustomWorldTime(id, arena.getGameId());
+            TimeManager.getManager().startCustomWorldTime(id, arenaBase.getGameId());
         }
     }
 

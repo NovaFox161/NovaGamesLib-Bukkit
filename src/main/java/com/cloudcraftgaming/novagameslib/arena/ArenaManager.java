@@ -23,7 +23,7 @@ import static com.cloudcraftgaming.novagameslib.NovaGamesLib.plugin;
 public class ArenaManager {
 	private static ArenaManager instance;
 
-	private final ArrayList<Arena> arenas = new ArrayList<>();
+	private final ArrayList<IArena> arenas = new ArrayList<>();
 
 	/**
 	 * Constructor for ArenaManger. Private to prevent multiple instances.
@@ -48,7 +48,7 @@ public class ArenaManager {
 	 * @return <code>true</code> if loaded, else <code>false</code>.
 	 */
 	public Boolean arenaLoaded(int i) {
-		for (Arena a : arenas) {
+		for (IArena a : arenas) {
 			if (a.getId() == i) {
 				return true;
 			}
@@ -63,7 +63,7 @@ public class ArenaManager {
 	 * @return <code>true</code> if in a game, else <code>false</code>.
 	 */
 	public Boolean isInGame(Player player) {
-		for (Arena a : arenas) {
+		for (IArena a : arenas) {
 			if (a.getPlayers().contains(player.getUniqueId())) {
 				return true;
 			}
@@ -78,7 +78,7 @@ public class ArenaManager {
 	 * @return <cide>true</cide> if spectating, else <code>false</code>.
 	 */
 	public Boolean isSpectating(Player player) {
-		for (Arena a : arenas) {
+		for (IArena a : arenas) {
 			if (a.getSpectators().contains(player.getUniqueId())) {
 				return true;
 			}
@@ -93,8 +93,8 @@ public class ArenaManager {
 	 * @param id The ID of the arena.
 	 * @return The Arena requested.
 	 */
-	public Arena getArena(int id) {
-		for (Arena a : arenas) {
+	public IArena getArena(int id) {
+		for (IArena a : arenas) {
 			if (a.getId() == id) {
 				return a;
 			}
@@ -109,8 +109,8 @@ public class ArenaManager {
 	 * @param player The player to get.
 	 * @return The arena containing the specified player.
 	 */
-	public Arena getArena(Player player) {
-		for (Arena a : arenas) {
+	public IArena getArena(Player player) {
+		for (IArena a : arenas) {
 			if (a.getPlayers().contains(player.getUniqueId())) {
 				return a;
 			}
@@ -126,7 +126,7 @@ public class ArenaManager {
 	 * Please use wisely as this can cause issues if you change the set!
 	 * @return An ArrayList containing all loaded arenas.
 	 */
-	public ArrayList<Arena> getAllLoadedArenas() {
+	public ArrayList<IArena> getAllLoadedArenas() {
 		return arenas;
 	}
 
@@ -136,19 +136,19 @@ public class ArenaManager {
 	 * This will call the {@link ArenaLoadEvent} event.
 	 * If not cancelled, will mark the specified arena as loaded.
 	 * This will NOT mark any actual arena data!!!! YOU MUST SET THAT YOURSELF!!!
-	 * @param arena The arena to mark as loaded.
+	 * @param arenaBase The arena to mark as loaded.
 	 * @return <code>true</code> if not cancelled and successful, else <code>false</code>.
 	 */
-	public Boolean loadArena(Arena arena) {
-		if (!arenaLoaded(arena.getId())) {
-			ArenaLoadEvent event = new ArenaLoadEvent(arena);
+	public Boolean loadArena(ArenaBase arenaBase) {
+		if (!arenaLoaded(arenaBase.getId())) {
+			ArenaLoadEvent event = new ArenaLoadEvent(arenaBase);
 			Bukkit.getServer().getPluginManager().callEvent(event);
 
 			if (!event.isCancelled()) {
-				arenas.add(arena);
+				arenas.add(arenaBase);
 				//ArenaDataManager.updateArenaInfo(arena.getId());
 				if (FileManager.verbose()) {
-					plugin.getLogger().info("Loaded arena " + arena.getId());
+					plugin.getLogger().info("Loaded arena " + arenaBase.getId());
 				}
 				return true;
 			}
@@ -172,20 +172,20 @@ public class ArenaManager {
 
 					if (!event.isCancelled()) {
 						if (event.shouldLetNovaGamesHandle()) {
-							Arena arena = new Arena(id, gameName, useTeams);
-							arena.setArenaStatus(ArenaStatus.EMPTY);
-							arena.setGameState(GameState.NOT_STARTED);
-							arena.setPlayerCount(0);
-							arena.setJoinable(true);
-							arenas.add(arena);
+							ArenaBase arenaBase = new ArenaBase(id, gameName, useTeams);
+							arenaBase.setArenaStatus(ArenaStatus.EMPTY);
+							arenaBase.setGameState(GameState.NOT_STARTED);
+							arenaBase.setPlayerCount(0);
+							arenaBase.setJoinable(true);
+							arenas.add(arenaBase);
 							//ArenaDataManager.updateArenaInfo(id);
 							if (FileManager.verbose()) {
 								plugin.getLogger().info("Loaded arena " + id);
 							}
 							return true;
 						} else {
-							if (event.getArena() != null) {
-								arenas.add(event.getArena());
+							if (event.getArenaBase() != null) {
+								arenas.add(event.getArenaBase());
 							}
 							//ArenaDataManager.updateArenaInfo(id);
 							if (FileManager.verbose()) {
@@ -205,19 +205,19 @@ public class ArenaManager {
 	 * This will call the {@link ArenaUnloadEvent} event.
 	 * If not cancelled, will mark the specified arena as unloaded.
 	 * This will NOT mark any actual arena data!!!! YOU MUST SET THAT YOURSELF!!!
-	 * @param arena The arena to mark as unloaded.
+	 * @param arenaBase The arena to mark as unloaded.
 	 * @return <code>true</code> if not cancelled and successful, else <code>false</code>.
 	 */
-	public Boolean unloadArena(Arena arena) {
-		if (arenaLoaded(arena.getId())) {
-			ArenaUnloadEvent event = new ArenaUnloadEvent(arena);
+	public Boolean unloadArena(ArenaBase arenaBase) {
+		if (arenaLoaded(arenaBase.getId())) {
+			ArenaUnloadEvent event = new ArenaUnloadEvent(arenaBase);
 			Bukkit.getServer().getPluginManager().callEvent(event);
 
 			if (!event.isCancelled()) {
-				arenas.remove(arena);
+				arenas.remove(arenaBase);
 				//ArenaDataManager.updateArenaInfo(arena.getId());
 				if (FileManager.verbose()) {
-					plugin.getLogger().info("Unloaded arena " + arena.getId());
+					plugin.getLogger().info("Unloaded arena " + arenaBase.getId());
 				}
 				return true;
 			}
@@ -238,7 +238,7 @@ public class ArenaManager {
 
 			if (!event.isCancelled()) {
 				if (event.shouldLetNovaGamesHandle()) {
-					Arena arena = getArena(id);
+					IArena arena = getArena(id);
 					arenas.remove(arena);
 					//ArenaDataManager.updateArenaInfo(id);
 					if (FileManager.verbose()) {
@@ -246,8 +246,8 @@ public class ArenaManager {
 					}
 					return true;
 				} else {
-					if (event.getArena() != null) {
-						arenas.remove(event.getArena());
+					if (event.getArenaBase() != null) {
+						arenas.remove(event.getArenaBase());
 					}
 					//ArenaDataManager.updateArenaInfo(id);
 					if (FileManager.verbose()) {

@@ -1,6 +1,6 @@
 package com.cloudcraftgaming.novagameslib.event.time;
 
-import com.cloudcraftgaming.novagameslib.arena.Arena;
+import com.cloudcraftgaming.novagameslib.arena.ArenaBase;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -15,20 +15,20 @@ public class WaitDelayCancelEvent extends Event implements Cancellable {
     private final Integer id;
     private final String gameName;
 
-    private Arena arena;
+    private ArenaBase arenaBase;
 
     private boolean cancelled;
     private static final HandlerList handlers = new HandlerList();
 
     /**
      * Constructor for WaitDelayCancelEvent
-     * @param _arena The arena that is involved in this event.
+     * @param _arenaBase The arena that is involved in this event.
      */
-    public WaitDelayCancelEvent(Arena _arena) {
-        arena = _arena;
+    public WaitDelayCancelEvent(ArenaBase _arenaBase) {
+        arenaBase = _arenaBase;
 
-        id = arena.getId();
-        gameName = arena.getGameName();
+        id = arenaBase.getId();
+        gameName = arenaBase.getGameName();
     }
 
     /**
@@ -51,8 +51,8 @@ public class WaitDelayCancelEvent extends Event implements Cancellable {
      * Gets the arena involved in this event.
      * @return The arena involved in this event.
      */
-    public Arena getArena() {
-        return arena;
+    public ArenaBase getArenaBase() {
+        return arenaBase;
     }
 
     /**

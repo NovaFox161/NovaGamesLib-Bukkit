@@ -1,6 +1,6 @@
 package com.cloudcraftgaming.novagameslib.event.minigame;
 
-import com.cloudcraftgaming.novagameslib.arena.Arena;
+import com.cloudcraftgaming.novagameslib.arena.ArenaBase;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
@@ -14,19 +14,19 @@ public class MinigameEndEvent extends Event {
     private final Integer id;
     private final String gameName;
 
-    private Arena arena;
+    private ArenaBase arenaBase;
 
     private static final HandlerList handlers = new HandlerList();
 
     /**
      * Constructor  for MinigameEndEvent
-     * @param _arena The arena in which a game is ending.
+     * @param _arenaBase The arena in which a game is ending.
      */
-    public MinigameEndEvent(Arena _arena) {
-        id = _arena.getId();
-        gameName = _arena.getGameName();
+    public MinigameEndEvent(ArenaBase _arenaBase) {
+        id = _arenaBase.getId();
+        gameName = _arenaBase.getGameName();
 
-        arena = _arena;
+        arenaBase = _arenaBase;
     }
 
     /**
@@ -52,8 +52,8 @@ public class MinigameEndEvent extends Event {
      *
      * @return The arena involved in this event.
      */
-    public Arena getArena() {
-        return arena;
+    public ArenaBase getArenaBase() {
+        return arenaBase;
     }
 
     /**

@@ -1,7 +1,7 @@
 package com.cloudcraftgaming.novagameslib.time;
 
 import com.cloudcraftgaming.novagameslib.NovaGamesLib;
-import com.cloudcraftgaming.novagameslib.arena.Arena;
+import com.cloudcraftgaming.novagameslib.arena.ArenaBase;
 import com.cloudcraftgaming.novagameslib.arena.ArenaManager;
 import com.cloudcraftgaming.novagameslib.arena.ArenaStatus;
 import com.cloudcraftgaming.novagameslib.data.ArenaDataManager;
@@ -44,14 +44,14 @@ public class TimeManager {
      */
     public void startWaitDelay(final int id) {
         if (ArenaManager.getManager().arenaLoaded(id)) {
-            Arena arena = ArenaManager.getManager().getArena(id);
-            if (arena.getWaitId() == 0 && arena.getArenaStatus().equals(ArenaStatus.WAITING_FOR_PLAYERS)) {
+            ArenaBase arenaBase = ArenaManager.getManager().getArena(id);
+            if (arenaBase.getWaitId() == 0 && arenaBase.getArenaStatus().equals(ArenaStatus.WAITING_FOR_PLAYERS)) {
                 Integer waitDelay = ArenaDataManager.getWaitDelay(id);
                 Random rn = new Random();
                 final Integer waitId = rn.nextInt(99999998) + 1;
-                arena.setStartId(0);
-                arena.setWaitId(waitId);
-                WaitDelayStartEvent event = new WaitDelayStartEvent(arena, waitDelay);
+                arenaBase.setStartId(0);
+                arenaBase.setWaitId(waitId);
+                WaitDelayStartEvent event = new WaitDelayStartEvent(arenaBase, waitDelay);
                 getServer().getPluginManager().callEvent(event);
 
                 final Boolean goToStart = event.goToStart();
@@ -63,8 +63,8 @@ public class TimeManager {
                         @Override
                         public void run() {
                             if (ArenaManager.getManager().arenaLoaded(id)) {
-                                Arena arena1 = ArenaManager.getManager().getArena(id);
-                                if (arena1.getWaitId().equals(waitId) && arena1.getArenaStatus().equals(ArenaStatus.WAITING_FOR_PLAYERS)) {
+                                ArenaBase arenaBase1 = ArenaManager.getManager().getArena(id);
+                                if (arenaBase1.getWaitId().equals(waitId) && arenaBase1.getArenaStatus().equals(ArenaStatus.WAITING_FOR_PLAYERS)) {
                                     //Wait time over, begin start delay.
                                     if (FileManager.verbose()) {
                                         NovaGamesLib.plugin.getLogger().info("Wait delay over for arena " + id);
@@ -77,8 +77,8 @@ public class TimeManager {
                         }
                     }, 20L * event.getWaitDelay());
                 } else {
-                    arena.setWaitId(0);
-                    arena.setStartId(0);
+                    arenaBase.setWaitId(0);
+                    arenaBase.setStartId(0);
                     if (event.goToStart()) {
                         startStartDelay(id);
                     }
@@ -94,14 +94,14 @@ public class TimeManager {
      */
     public void cancelWaitDelay(int id) {
         if (ArenaManager.getManager().arenaLoaded(id)) {
-            Arena arena = ArenaManager.getManager().getArena(id);
+            ArenaBase arenaBase = ArenaManager.getManager().getArena(id);
 
-            WaitDelayCancelEvent event = new WaitDelayCancelEvent(arena);
+            WaitDelayCancelEvent event = new WaitDelayCancelEvent(arenaBase);
             getServer().getPluginManager().callEvent(event);
 
             if (!event.isCancelled()) {
-                arena.setWaitId(0);
-                arena.setStartId(0);
+                arenaBase.setWaitId(0);
+                arenaBase.setStartId(0);
                 if (FileManager.verbose()) {
                     NovaGamesLib.plugin.getLogger().info("Wait delay cancelled for arena " + id);
                 }
@@ -116,44 +116,44 @@ public class TimeManager {
      */
     public void startStartDelay(final int id) {
         if (ArenaManager.getManager().arenaLoaded(id)) {
-            Arena arena = ArenaManager.getManager().getArena(id);
-            if (arena.getStartId() == 0 && arena.getArenaStatus().equals(ArenaStatus.WAITING_FOR_PLAYERS)) {
+            ArenaBase arenaBase = ArenaManager.getManager().getArena(id);
+            if (arenaBase.getStartId() == 0 && arenaBase.getArenaStatus().equals(ArenaStatus.WAITING_FOR_PLAYERS)) {
                 Integer startDelay = ArenaDataManager.getStartDelay(id);
                 Random rn = new Random();
                 final Integer startId = rn.nextInt(99999998) + 1;
-                arena.setWaitId(0);
-                arena.setStartId(startId);
-                StartDelayStartEvent event = new StartDelayStartEvent(arena, startDelay);
+                arenaBase.setWaitId(0);
+                arenaBase.setStartId(startId);
+                StartDelayStartEvent event = new StartDelayStartEvent(arenaBase, startDelay);
                 getServer().getPluginManager().callEvent(event);
 
                 if (!event.isCancelled()) {
                     if (FileManager.verbose()) {
                         NovaGamesLib.plugin.getLogger().info("Starting start delay for arena " + id);
                     }
-                    arena.setGameState(GameState.STARTING);
-                    arena.setArenaStatus(ArenaStatus.STARTING);
+                    arenaBase.setGameState(GameState.STARTING);
+                    arenaBase.setArenaStatus(ArenaStatus.STARTING);
                     final Boolean goToGameStart = event.goToGameStart();
                     getServer().getScheduler().scheduleSyncDelayedTask(NovaGamesLib.plugin, new Runnable() {
                         @Override
                         public void run() {
                             if (ArenaManager.getManager().arenaLoaded(id)) {
-                                Arena arena1 = ArenaManager.getManager().getArena(id);
-                                if (arena1.getStartId().equals(startId) && arena1.getArenaStatus().equals(ArenaStatus.STARTING)) {
+                                ArenaBase arenaBase1 = ArenaManager.getManager().getArena(id);
+                                if (arenaBase1.getStartId().equals(startId) && arenaBase1.getArenaStatus().equals(ArenaStatus.STARTING)) {
                                     if (FileManager.verbose()) {
                                         NovaGamesLib.plugin.getLogger().info("Start delay over for arena " + id);
                                     }
                                     if (goToGameStart) {
-                                        MinigameEventHandler.startMinigame(arena1.getId());
+                                        MinigameEventHandler.startMinigame(arenaBase1.getId());
                                     }
                                 }
                             }
                         }
                     }, 20L * event.getStartDelay());
                 } else {
-                    arena.setWaitId(0);
-                    arena.setStartId(0);
+                    arenaBase.setWaitId(0);
+                    arenaBase.setStartId(0);
                     if (event.goToGameStart()) {
-                        MinigameEventHandler.startMinigame(arena.getId());
+                        MinigameEventHandler.startMinigame(arenaBase.getId());
                     }
                 }
             }
@@ -167,14 +167,14 @@ public class TimeManager {
      */
     public void cancelStartDelay(int id) {
         if (ArenaManager.getManager().arenaLoaded(id)) {
-            Arena arena = ArenaManager.getManager().getArena(id);
+            ArenaBase arenaBase = ArenaManager.getManager().getArena(id);
 
-            StartDelayCancelEvent event = new StartDelayCancelEvent(arena);
+            StartDelayCancelEvent event = new StartDelayCancelEvent(arenaBase);
             getServer().getPluginManager().callEvent(event);
 
             if (!event.isCancelled()) {
-                arena.setWaitId(0);
-                arena.setStartId(0);
+                arenaBase.setWaitId(0);
+                arenaBase.setStartId(0);
                 if (FileManager.verbose()) {
                     NovaGamesLib.plugin.getLogger().info("Start delay cancelled for arena " + id);
                 }
@@ -190,14 +190,14 @@ public class TimeManager {
      */
     public void startGameTimer(final int id) {
         if (ArenaManager.getManager().arenaLoaded(id)) {
-            Arena arena = ArenaManager.getManager().getArena(id);
-            if (arena.getGameId() == 0 && arena.getArenaStatus().equals(ArenaStatus.INGAME)) {
+            ArenaBase arenaBase = ArenaManager.getManager().getArena(id);
+            if (arenaBase.getGameId() == 0 && arenaBase.getArenaStatus().equals(ArenaStatus.INGAME)) {
                 Integer gameTime = ArenaDataManager.getGameLength(id);
                 Random rn = new Random();
                 final Integer gameId = rn.nextInt(99999998) + 1;
-                arena.setStartId(0);
-                arena.setGameId(gameId);
-                GameTimerStartEvent startEvent = new GameTimerStartEvent(arena, gameTime);
+                arenaBase.setStartId(0);
+                arenaBase.setGameId(gameId);
+                GameTimerStartEvent startEvent = new GameTimerStartEvent(arenaBase, gameTime);
                 getServer().getPluginManager().callEvent(startEvent);
 
                 if (!startEvent.isCancelled()) {
@@ -208,9 +208,9 @@ public class TimeManager {
                         @Override
                         public void run() {
                             if (ArenaManager.getManager().arenaLoaded(id)) {
-                                Arena arena1 = ArenaManager.getManager().getArena(id);
-                                if (arena1.getGameId().equals(gameId) && arena1.getArenaStatus().equals(ArenaStatus.INGAME)) {
-                                    GameTimerEndEvent endEvent = new GameTimerEndEvent(arena1);
+                                ArenaBase arenaBase1 = ArenaManager.getManager().getArena(id);
+                                if (arenaBase1.getGameId().equals(gameId) && arenaBase1.getArenaStatus().equals(ArenaStatus.INGAME)) {
+                                    GameTimerEndEvent endEvent = new GameTimerEndEvent(arenaBase1);
                                     getServer().getPluginManager().callEvent(endEvent);
                                     if (FileManager.verbose()) {
                                         NovaGamesLib.plugin.getLogger().info("Game timer over for arena id " + id);
@@ -223,8 +223,8 @@ public class TimeManager {
                         }
                     }, 20L * 60 * startEvent.getGameLength());
                 } else {
-                    arena.setStartId(0);
-                    arena.setGameId(0);
+                    arenaBase.setStartId(0);
+                    arenaBase.setGameId(0);
                 }
             }
         }
@@ -241,8 +241,8 @@ public class TimeManager {
             @Override
             public void run() {
                 if (ArenaManager.getManager().arenaLoaded(id)) {
-                    Arena arena = ArenaManager.getManager().getArena(id);
-                    if (arena.getGameState().equals(GameState.INGAME) && arena.getGameId().equals(gameId)) {
+                    ArenaBase arenaBase = ArenaManager.getManager().getArena(id);
+                    if (arenaBase.getGameState().equals(GameState.INGAME) && arenaBase.getGameId().equals(gameId)) {
                         //Update current world time.
                         CustomDayNightCycle.getInstance().updateTimeToCustomTime(id, ArenaDataManager.getMainSpawnLocation(id).getWorld());
                         startCustomWorldTime(id, gameId);
@@ -260,20 +260,20 @@ public class TimeManager {
      */
     private void startBoardSwitchTime(final int id, final int gameId, final Integer switchTime) {
         if (ArenaManager.getManager().arenaLoaded(id)) {
-            Arena arena = ArenaManager.getManager().getArena(id);
-            if (arena.getGameId().equals(gameId) && arena.getGameState().equals(GameState.INGAME)) {
+            ArenaBase arenaBase = ArenaManager.getManager().getArena(id);
+            if (arenaBase.getGameId().equals(gameId) && arenaBase.getGameState().equals(GameState.INGAME)) {
                 getServer().getScheduler().scheduleSyncDelayedTask(NovaGamesLib.plugin, new Runnable() {
                     @Override
                     public void run() {
                         if (ArenaManager.getManager().arenaLoaded(id)) {
-                            Arena arena1 = ArenaManager.getManager().getArena(id);
-                            if (arena1.getGameId().equals(gameId) && arena1.getGameState().equals(GameState.INGAME)) {
-                                if (!arena1.isOnMainBoard()) {
+                            ArenaBase arenaBase1 = ArenaManager.getManager().getArena(id);
+                            if (arenaBase1.getGameId().equals(gameId) && arenaBase1.getGameState().equals(GameState.INGAME)) {
+                                if (!arenaBase1.isOnMainBoard()) {
                                     //Switch to main board.
-                                    startBoardSwitchTime(id, arena1.getGameId(), switchTime);
+                                    startBoardSwitchTime(id, arenaBase1.getGameId(), switchTime);
                                 } else {
                                     //Switch to team boards.
-                                    startBoardSwitchTime(id, arena1.getGameId(), switchTime);
+                                    startBoardSwitchTime(id, arenaBase1.getGameId(), switchTime);
                                 }
                             }
                         }

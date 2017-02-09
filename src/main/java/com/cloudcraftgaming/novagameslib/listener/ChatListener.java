@@ -1,7 +1,7 @@
 package com.cloudcraftgaming.novagameslib.listener;
 
 import com.cloudcraftgaming.novagameslib.NovaGamesLib;
-import com.cloudcraftgaming.novagameslib.arena.Arena;
+import com.cloudcraftgaming.novagameslib.arena.ArenaBase;
 import com.cloudcraftgaming.novagameslib.arena.ArenaManager;
 import com.cloudcraftgaming.novagameslib.data.ArenaDataManager;
 import com.cloudcraftgaming.novagameslib.team.Team;
@@ -30,10 +30,10 @@ public class ChatListener implements Listener {
                 if (ArenaManager.getManager().isInGame(event.getPlayer())
                         || ArenaManager.getManager().isSpectating(event.getPlayer())) {
                     Player player = event.getPlayer();
-                    Arena arena = ArenaManager.getManager().getArena(player);
+                    ArenaBase arenaBase = ArenaManager.getManager().getArena(player);
                     if (NovaGamesLib.plugin.perWorldChatPlus != null) {
                         if (ChatMessage.shouldBeGlobal(event.getMessage(), player)) {
-                            event.setFormat(ArenaDataManager.getChatPrefix(arena.getId()) + event.getFormat());
+                            event.setFormat(ArenaDataManager.getChatPrefix(arenaBase.getId()) + event.getFormat());
                             event.setMessage(event.getMessage());
                         } else {
                             if (NovaGamesLib.plugin.getConfig().getString("Chat.PerGame").equalsIgnoreCase("True")) {
@@ -42,13 +42,13 @@ public class ChatListener implements Listener {
                                     event.getRecipients().add(player);
 
                                     for (Player p : Bukkit.getOnlinePlayers()) {
-                                        if (arena.getSpectators().contains(p.getUniqueId())) {
+                                        if (arenaBase.getSpectators().contains(p.getUniqueId())) {
                                             event.getRecipients().add(p);
                                         }
-                                        if (arena.getPlayers().contains(p.getUniqueId())) {
-                                            if (arena.useTeams() || arena.getTeams().isOnATeam(player.getUniqueId())) {
-                                                Team team = arena.getTeams().getTeam(player.getUniqueId());
-                                                if (arena.getTeams().isOnTeam(p.getUniqueId(), team)) {
+                                        if (arenaBase.getPlayers().contains(p.getUniqueId())) {
+                                            if (arenaBase.useTeams() || arenaBase.getTeams().isOnATeam(player.getUniqueId())) {
+                                                Team team = arenaBase.getTeams().getTeam(player.getUniqueId());
+                                                if (arenaBase.getTeams().isOnTeam(p.getUniqueId(), team)) {
                                                     event.getRecipients().add(p);
                                                 }
                                             } else {
@@ -60,14 +60,14 @@ public class ChatListener implements Listener {
                                     for (Player p1 : spies) {
                                         event.getRecipients().add(p1);
                                     }
-                                    event.setFormat(ArenaDataManager.getChatPrefix(arena.getId()) + event.getFormat());
+                                    event.setFormat(ArenaDataManager.getChatPrefix(arenaBase.getId()) + event.getFormat());
                                     event.setMessage(event.getMessage());
                                 } else {
                                     //Per game only
                                     event.getRecipients().clear();
                                     event.getRecipients().add(player);
                                     for (Player p : Bukkit.getOnlinePlayers()) {
-                                        if (arena.getPlayers().contains(p.getUniqueId()) || arena.getSpectators().contains(p.getUniqueId())) {
+                                        if (arenaBase.getPlayers().contains(p.getUniqueId()) || arenaBase.getSpectators().contains(p.getUniqueId())) {
                                             event.getRecipients().add(p);
                                         }
                                     }
@@ -75,12 +75,12 @@ public class ChatListener implements Listener {
                                     for (Player p1 : spies) {
                                         event.getRecipients().add(p1);
                                     }
-                                    event.setFormat(ArenaDataManager.getChatPrefix(arena.getId()) + event.getFormat());
+                                    event.setFormat(ArenaDataManager.getChatPrefix(arenaBase.getId()) + event.getFormat());
                                     event.setMessage(event.getMessage());
                                 }
                             } else {
                                 //Not per game, just add minigames prefix so we know where this came from.
-                                event.setFormat(ArenaDataManager.getChatPrefix(arena.getId()) + event.getFormat());
+                                event.setFormat(ArenaDataManager.getChatPrefix(arenaBase.getId()) + event.getFormat());
                                 event.setMessage(event.getMessage());
                             }
                         }
@@ -89,13 +89,13 @@ public class ChatListener implements Listener {
                         if (NovaGamesLib.plugin.getConfig().getString("Chat.PerGame").equalsIgnoreCase("True")) {
                             if (NovaGamesLib.plugin.getConfig().getString("Chat.PerTeam").equalsIgnoreCase("True")) {
                                 for (Player p : Bukkit.getOnlinePlayers()) {
-                                    if (arena.getSpectators().contains(p.getUniqueId())) {
+                                    if (arenaBase.getSpectators().contains(p.getUniqueId())) {
                                         event.getRecipients().add(p);
                                     }
-                                    if (arena.getPlayers().contains(p.getUniqueId())) {
-                                        if (arena.useTeams() || arena.getTeams().isOnATeam(player.getUniqueId())) {
-                                            Team team = arena.getTeams().getTeam(player.getUniqueId());
-                                            if (arena.getTeams().isOnTeam(p.getUniqueId(), team)) {
+                                    if (arenaBase.getPlayers().contains(p.getUniqueId())) {
+                                        if (arenaBase.useTeams() || arenaBase.getTeams().isOnATeam(player.getUniqueId())) {
+                                            Team team = arenaBase.getTeams().getTeam(player.getUniqueId());
+                                            if (arenaBase.getTeams().isOnTeam(p.getUniqueId(), team)) {
                                                 event.getRecipients().add(p);
                                             }
                                         } else {
@@ -103,23 +103,23 @@ public class ChatListener implements Listener {
                                         }
                                     }
                                 }
-                                event.setFormat(ArenaDataManager.getChatPrefix(arena.getId()) + event.getFormat());
+                                event.setFormat(ArenaDataManager.getChatPrefix(arenaBase.getId()) + event.getFormat());
                                 event.setMessage(event.getMessage());
                             } else {
                                 //Per game only
                                 event.getRecipients().clear();
                                 event.getRecipients().add(player);
                                 for (Player p : Bukkit.getOnlinePlayers()) {
-                                    if (arena.getPlayers().contains(p.getUniqueId()) || arena.getSpectators().contains(p.getUniqueId())) {
+                                    if (arenaBase.getPlayers().contains(p.getUniqueId()) || arenaBase.getSpectators().contains(p.getUniqueId())) {
                                         event.getRecipients().add(p);
                                     }
                                 }
-                                event.setFormat(ArenaDataManager.getChatPrefix(arena.getId()) + event.getFormat());
+                                event.setFormat(ArenaDataManager.getChatPrefix(arenaBase.getId()) + event.getFormat());
                                 event.setMessage(event.getMessage());
                             }
                         } else {
                             //Not per game, just add minigames prefix so we know where this came from.
-                            event.setFormat(ArenaDataManager.getChatPrefix(arena.getId()) + event.getFormat());
+                            event.setFormat(ArenaDataManager.getChatPrefix(arenaBase.getId()) + event.getFormat());
                             event.setMessage(event.getMessage());
                         }
                     }
