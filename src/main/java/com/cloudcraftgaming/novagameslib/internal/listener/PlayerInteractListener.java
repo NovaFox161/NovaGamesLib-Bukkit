@@ -1,4 +1,4 @@
-package com.cloudcraftgaming.novagameslib.listener;
+package com.cloudcraftgaming.novagameslib.internal.listener;
 
 import com.cloudcraftgaming.novagameslib.NovaGamesLib;
 import com.cloudcraftgaming.novagameslib.data.PlayerDataManager;

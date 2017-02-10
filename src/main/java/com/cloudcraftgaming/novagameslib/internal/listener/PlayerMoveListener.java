@@ -1,4 +1,4 @@
-package com.cloudcraftgaming.novagameslib.listener;
+package com.cloudcraftgaming.novagameslib.internal.listener;
 
 import com.cloudcraftgaming.novagameslib.arena.ArenaBase;
 import com.cloudcraftgaming.novagameslib.arena.ArenaManager;

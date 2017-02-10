@@ -1,4 +1,4 @@
-package com.cloudcraftgaming.novagameslib.utils;
+package com.cloudcraftgaming.novagameslib.internal.utils;
 
 import com.cloudcraftgaming.novagameslib.NovaGamesLib;
 import org.w3c.dom.Document;
