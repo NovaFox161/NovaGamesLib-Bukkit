@@ -41,7 +41,7 @@ public class MinigameEventHandler {
             if (!event.isCancelled()) {
                 //ArenaDataManager.updateArenaInfo(id);
                 if (FileManager.verbose()) {
-                    plugin.getLogger().info(player.getName() + " has joined arena " + id);
+                    plugin.getLogger().info(player.getName() + " has joined arenaBase " + id);
                 }
                 arenaBase.setPlayerStats(new PlayerStats(player.getUniqueId(), arenaBase.getGameName()), false);
                 return true;
@@ -71,7 +71,7 @@ public class MinigameEventHandler {
 
             if (!event.isCancelled()) {
                 if (FileManager.verbose()) {
-                    plugin.getLogger().info(player.getName() + " is spectating arena " + id);
+                    plugin.getLogger().info(player.getName() + " is spectating arenaBase " + id);
                 }
                 return true;
             } else {
@@ -98,7 +98,7 @@ public class MinigameEventHandler {
             arenaBase.getPlayers().remove(player.getUniqueId());
             arenaBase.setPlayerCount(arenaBase.getPlayerCount() - 1);
             if (FileManager.verbose()) {
-                plugin.getLogger().info(player.getName() + " has quit arena " + arenaBase.getId());
+                plugin.getLogger().info(player.getName() + " has quit arenaBase " + arenaBase.getId());
             }
             if (NovaGamesLib.plugin.getConfig().getString("Stats.Track.Enabled").equalsIgnoreCase("True")) {
                 if (arenaBase.getArenaStatus().equals(ArenaStatus.INGAME) || arenaBase.getGameState().equals(GameState.INGAME)) {
@@ -116,7 +116,7 @@ public class MinigameEventHandler {
         } else if (arenaBase.getSpectators().contains(player.getUniqueId())) {
             arenaBase.getSpectators().remove(player.getUniqueId());
             if (FileManager.verbose()) {
-                plugin.getLogger().info(player.getName() + "no longer spectating arena " + arenaBase.getId());
+                plugin.getLogger().info(player.getName() + "no longer spectating arenaBase " + arenaBase.getId());
             }
         }
         return true;
@@ -178,7 +178,7 @@ public class MinigameEventHandler {
         MinigameEndEvent event = new MinigameEndEvent(arenaBase);
         Bukkit.getServer().getPluginManager().callEvent(event);
         if (FileManager.verbose()) {
-            NovaGamesLib.plugin.getLogger().info("Minigame in arena " + id + " has ended.");
+            NovaGamesLib.plugin.getLogger().info("Minigame in arenaBase " + id + " has ended.");
         }
         //ArenaDataManager.updateArenaInfo(id);
         return true;

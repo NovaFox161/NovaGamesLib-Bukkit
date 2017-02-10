@@ -57,7 +57,7 @@ public class TimeManager {
                 final Boolean goToStart = event.goToStart();
                 if (!event.isCancelled()) {
                     if (FileManager.verbose()) {
-                        NovaGamesLib.plugin.getLogger().info("Starting wait delay for arena " + id);
+                        NovaGamesLib.plugin.getLogger().info("Starting wait delay for arenaBase " + id);
                     }
                     getServer().getScheduler().scheduleSyncDelayedTask(NovaGamesLib.plugin, new Runnable() {
                         @Override
@@ -67,7 +67,7 @@ public class TimeManager {
                                 if (arenaBase1.getWaitId().equals(waitId) && arenaBase1.getArenaStatus().equals(ArenaStatus.WAITING_FOR_PLAYERS)) {
                                     //Wait time over, begin start delay.
                                     if (FileManager.verbose()) {
-                                        NovaGamesLib.plugin.getLogger().info("Wait delay over for arena " + id);
+                                        NovaGamesLib.plugin.getLogger().info("Wait delay over for arenaBase " + id);
                                     }
                                     if (goToStart) {
                                         startStartDelay(id);
@@ -103,7 +103,7 @@ public class TimeManager {
                 arenaBase.setWaitId(0);
                 arenaBase.setStartId(0);
                 if (FileManager.verbose()) {
-                    NovaGamesLib.plugin.getLogger().info("Wait delay cancelled for arena " + id);
+                    NovaGamesLib.plugin.getLogger().info("Wait delay cancelled for arenaBase " + id);
                 }
             }
         }
@@ -128,7 +128,7 @@ public class TimeManager {
 
                 if (!event.isCancelled()) {
                     if (FileManager.verbose()) {
-                        NovaGamesLib.plugin.getLogger().info("Starting start delay for arena " + id);
+                        NovaGamesLib.plugin.getLogger().info("Starting start delay for arenaBase " + id);
                     }
                     arenaBase.setGameState(GameState.STARTING);
                     arenaBase.setArenaStatus(ArenaStatus.STARTING);
@@ -140,7 +140,7 @@ public class TimeManager {
                                 ArenaBase arenaBase1 = ArenaManager.getManager().getArena(id);
                                 if (arenaBase1.getStartId().equals(startId) && arenaBase1.getArenaStatus().equals(ArenaStatus.STARTING)) {
                                     if (FileManager.verbose()) {
-                                        NovaGamesLib.plugin.getLogger().info("Start delay over for arena " + id);
+                                        NovaGamesLib.plugin.getLogger().info("Start delay over for arenaBase " + id);
                                     }
                                     if (goToGameStart) {
                                         MinigameEventHandler.startMinigame(arenaBase1.getId());
@@ -176,7 +176,7 @@ public class TimeManager {
                 arenaBase.setWaitId(0);
                 arenaBase.setStartId(0);
                 if (FileManager.verbose()) {
-                    NovaGamesLib.plugin.getLogger().info("Start delay cancelled for arena " + id);
+                    NovaGamesLib.plugin.getLogger().info("Start delay cancelled for arenaBase " + id);
                 }
             }
         }
@@ -202,7 +202,7 @@ public class TimeManager {
 
                 if (!startEvent.isCancelled()) {
                     if (FileManager.verbose()) {
-                        NovaGamesLib.plugin.getLogger().info("Starting game timer for arena " + id);
+                        NovaGamesLib.plugin.getLogger().info("Starting game timer for arenaBase " + id);
                     }
                     getServer().getScheduler().scheduleSyncDelayedTask(NovaGamesLib.plugin, new Runnable() {
                         @Override
@@ -213,7 +213,7 @@ public class TimeManager {
                                     GameTimerEndEvent endEvent = new GameTimerEndEvent(arenaBase1);
                                     getServer().getPluginManager().callEvent(endEvent);
                                     if (FileManager.verbose()) {
-                                        NovaGamesLib.plugin.getLogger().info("Game timer over for arena id " + id);
+                                        NovaGamesLib.plugin.getLogger().info("Game timer over for arenaBase id " + id);
                                     }
                                     if (endEvent.endGame()) {
                                         MinigameEventHandler.endMinigame(id);

@@ -22,7 +22,7 @@ public class MinigameStartEvent extends Event implements Cancellable {
 
     /**
      * Constructor  for MinigameStartEvent
-     * @param _arenaBase The arena in which a game is starting.
+     * @param _arenaBase The arenaBase in which a game is starting.
      */
     public MinigameStartEvent(ArenaBase _arenaBase) {
         id = _arenaBase.getId();
@@ -32,27 +32,27 @@ public class MinigameStartEvent extends Event implements Cancellable {
     }
 
     /**
-     * Gets the ID of the arena involved in this event.
+     * Gets the ID of the arenaBase involved in this event.
      *
-     * @return The id of the arena involved in this event.
+     * @return The id of the arenaBase involved in this event.
      */
     public Integer getId() {
         return id;
     }
 
     /**
-     * Gets the name of the minigame belonging to the arena involved in this event.
+     * Gets the name of the minigame belonging to the arenaBase involved in this event.
      *
-     * @return The name of the minigame belonging to the arena.
+     * @return The name of the minigame belonging to the arenaBase.
      */
     public String getGameName() {
         return gameName;
     }
 
     /**
-     * Gets the arena involved in this event.
+     * Gets the arenaBase involved in this event.
      *
-     * @return The arena involved in this event.
+     * @return The arenaBase involved in this event.
      */
     public ArenaBase getArenaBase() {
         return arenaBase;

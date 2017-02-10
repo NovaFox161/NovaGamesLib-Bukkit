@@ -60,7 +60,7 @@ public class AdminCommand {
                     }
 
                 } catch (NumberFormatException e) {
-                    player.sendMessage(MessageManager.getMessage("Notifications.Int.Arena"));
+                    player.sendMessage(MessageManager.getMessage("Notifications.Int.ArenaBase"));
                 }
             }
         } else {

@@ -63,7 +63,7 @@ public class SetCommand {
                         player.sendMessage(MessageManager.getMessage("Notifications.ArenaDoesNotExist"));
                     }
                 } catch (NumberFormatException e) {
-                    player.sendMessage(MessageManager.getMessage("Notifications.Int.Arena"));
+                    player.sendMessage(MessageManager.getMessage("Notifications.Int.ArenaBase"));
                 }
             } else if (args.length == 4) {
                 //base set <id> <type> <value>
@@ -227,7 +227,7 @@ public class SetCommand {
                         player.sendMessage(MessageManager.getMessage("Notifications.ArenaDoesNotExist"));
                     }
                 } catch (NumberFormatException e) {
-                    player.sendMessage(MessageManager.getMessage("Notifications.Int.Arena"));
+                    player.sendMessage(MessageManager.getMessage("Notifications.Int.ArenaBase"));
                 }
                 /*
             } else if (args.length == 5) {
@@ -250,7 +250,7 @@ public class SetCommand {
                         }
                     }
                 } catch (NumberFormatException e) {
-                    player.sendMessage(MessageManager.getMessage("Notifications.Int.Arena"));
+                    player.sendMessage(MessageManager.getMessage("Notifications.Int.ArenaBase"));
                 }
                 */
             } else if (args.length > 5) {

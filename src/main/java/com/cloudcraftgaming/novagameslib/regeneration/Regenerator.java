@@ -129,8 +129,8 @@ public class Regenerator {
 
         if (!preRegenEvent.isCancelled()) {
             if (FileManager.verbose()) {
-                NovaGamesLib.plugin.getLogger().info("Starting regeneration of arena id: " + id);
-                NovaGamesLib.plugin.getLogger().info("This may take some time depending on arena size (Sorry!).");
+                NovaGamesLib.plugin.getLogger().info("Starting regeneration of arenaBase id: " + id);
+                NovaGamesLib.plugin.getLogger().info("This may take some time depending on arenaBase size (Sorry!).");
             }
             ArenaBase arenaBase = ArenaManager.getManager().getArena(id);
             arenaBase.setArenaStatus(ArenaStatus.REGENERATING);
@@ -159,7 +159,7 @@ public class Regenerator {
             }
 
             if (FileManager.verbose()) {
-                NovaGamesLib.plugin.getLogger().info("Successfully regenerated arena id: " + id);
+                NovaGamesLib.plugin.getLogger().info("Successfully regenerated arenaBase id: " + id);
             }
 
             PostRegenerationEvent postRegenEvent = new PostRegenerationEvent(id);
@@ -306,7 +306,7 @@ public class Regenerator {
      */
     public static void resetDoors(int id, Cuboid regenArea) {
         if (FileManager.verbose()) {
-            NovaGamesLib.plugin.getLogger().info("Resetting all doors/trapdoors/etc for Arena Id: " + id);
+            NovaGamesLib.plugin.getLogger().info("Resetting all doors/trapdoors/etc for ArenaBase Id: " + id);
         }
         for (Block block : regenArea.getBlocks()) {
             if (block == null || block.getType().equals(Material.AIR)) {
@@ -323,7 +323,7 @@ public class Regenerator {
             }
         }
         if (FileManager.verbose()) {
-            NovaGamesLib.plugin.getLogger().info("Successfully reset all doors/trapdoors/etc for Arena Id: " + String.valueOf(id));
+            NovaGamesLib.plugin.getLogger().info("Successfully reset all doors/trapdoors/etc for ArenaBase Id: " + String.valueOf(id));
         }
     }
 

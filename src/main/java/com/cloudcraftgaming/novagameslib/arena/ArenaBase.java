@@ -18,7 +18,7 @@ import java.util.UUID;
  * For Project: NovaGamesLib
  */
 @SuppressWarnings({"unused", "WeakerAccess"})
-public class ArenaBase implements  IArena {
+public class ArenaBase {
 	private final int id;
 	private final String gameName;
 	private final Boolean useTeamsVar;
@@ -49,7 +49,7 @@ public class ArenaBase implements  IArena {
 	private Boolean isOnMainBoardBool;
 
 	/**
-	 * Creates an Arena object.
+	 * Creates an ArenaBase object.
 	 * @param _id The ID of the arena.
 	 * @param _gameName The name of the minigame using this arena.
 	 */
@@ -172,9 +172,9 @@ public class ArenaBase implements  IArena {
 	}
 
 	/**
-	 * Gets the Arena object.
+	 * Gets the ArenaBase object.
 	 * Used when extending this class and needing to access this object directly.
-	 * @return The Arena object.
+	 * @return The ArenaBase object.
 	 */
 	public ArenaBase getArena() {
 		return this;

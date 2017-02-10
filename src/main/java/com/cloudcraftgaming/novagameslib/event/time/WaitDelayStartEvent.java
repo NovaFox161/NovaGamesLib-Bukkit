@@ -24,7 +24,7 @@ public class WaitDelayStartEvent extends Event implements Cancellable {
 
     /**
      * Constructor for WaitDelayStartEvent
-     * @param _arenaBase The arena that is involved in this event.
+     * @param _arenaBase The arenaBase that is involved in this event.
      * @param _waitDelay The wait delay (in seconds).
      */
     public WaitDelayStartEvent(ArenaBase _arenaBase, Integer _waitDelay) {
@@ -37,24 +37,24 @@ public class WaitDelayStartEvent extends Event implements Cancellable {
     }
 
     /**
-     * Gets the ID of the arena involved in this event.
-     * @return The id of the arena involved in this event.
+     * Gets the ID of the arenaBase involved in this event.
+     * @return The id of the arenaBase involved in this event.
      */
     public Integer getId() {
         return id;
     }
 
     /**
-     * Gets the name of the minigame belonging to the arena involved in this event.
-     * @return The name of the minigame belonging to the arena.
+     * Gets the name of the minigame belonging to the arenaBase involved in this event.
+     * @return The name of the minigame belonging to the arenaBase.
      */
     public String getGameName() {
         return gameName;
     }
 
     /**
-     * Gets the arena involved in this event.
-     * @return The arena involved in this event.
+     * Gets the arenaBase involved in this event.
+     * @return The arenaBase involved in this event.
      */
     public ArenaBase getArenaBase() {
         return arenaBase;
@@ -69,9 +69,9 @@ public class WaitDelayStartEvent extends Event implements Cancellable {
     }
 
     /**
-     * Gets whether or not the arena will go on to the start delay.
+     * Gets whether or not the arenaBase will go on to the start delay.
      * By default, this is <code>true</code>.
-     * @return Whether or not the arena will go on to the start delay.
+     * @return Whether or not the arenaBase will go on to the start delay.
      */
     public Boolean goToStart() {
         return goToStartBool;
@@ -86,9 +86,9 @@ public class WaitDelayStartEvent extends Event implements Cancellable {
     }
 
     /**
-     * Sets whether or not the arena will go on to the start delay.
+     * Sets whether or not the arenaBase will go on to the start delay.
      * By default, this is <code>true</code>.
-     * @param value Whether or not the arena will go on to the start delay.
+     * @param value Whether or not the arenaBase will go on to the start delay.
      */
     public void setGoToStart(Boolean value) {
         goToStartBool = value;

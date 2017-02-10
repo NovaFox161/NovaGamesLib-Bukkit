@@ -50,7 +50,7 @@ public class PlayerCommand {
                     player.sendMessage(MessageManager.getMessage("Notifications.Args.Invalid"));
                 }
             } catch (NumberFormatException e) {
-                player.sendMessage(MessageManager.getMessage("Notifications.Int.Arena"));
+                player.sendMessage(MessageManager.getMessage("Notifications.Int.ArenaBase"));
             }
         } else if (args.length > 2) {
             player.sendMessage(MessageManager.getMessage("Notifications.Args.Many"));

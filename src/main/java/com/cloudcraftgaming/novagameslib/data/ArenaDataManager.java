@@ -52,7 +52,7 @@ public class ArenaDataManager {
 		File configFile = new File(NovaGamesLib.plugin.getDataFolder() + "/Arenas/" + String.valueOf(id) + "/config.yml");
 		YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
 		config.addDefault("Id", id);
-		config.addDefault("Name", "Arena " + String.valueOf(id));
+		config.addDefault("Name", "ArenaBase " + String.valueOf(id));
 		config.addDefault("DisplayName", "&5Arena " + String.valueOf(id));
 		config.addDefault("GameName", gameName);
 
@@ -289,7 +289,7 @@ public class ArenaDataManager {
 
 	/**
 	 * Gets the GameMode the minigame is in.
-	 * @param id The id of the Arena.
+	 * @param id The id of the ArenaBase.
 	 * @return The GameMode the minigame is in.
 	 */
 	public static GameMode getGameMode(int id) {
@@ -598,7 +598,7 @@ public class ArenaDataManager {
 
 	/**
 	 * Sets the GameMode the minigame is in.
-	 * @param id The Id of the Arena.
+	 * @param id The Id of the ArenaBase.
 	 * @param gameModeString The GameMode the minigame is in.
 	 * @return <code>true</code> if successful, else <code>false</code>.
 	 */
@@ -769,7 +769,7 @@ public class ArenaDataManager {
 
 	/**
 	 * Sets the location spectators are teleported to.
-	 * @param id The Id of the Arena
+	 * @param id The Id of the ArenaBase
 	 * @param loc THe spectating location.
 	 */
 	public static void setSpectateLocation(int id, Location loc) {
@@ -787,7 +787,7 @@ public class ArenaDataManager {
 	 * Sets the Main Spawn location to which players will be teleported to when the game starts and not using Teams.
 	 * Can be overridden by other plugins.
 	 * Use {@link  #setSecondarySpawn(int, Location)} to set the Secondary Spawn Location.
-	 * @param id The Id of the Arena.
+	 * @param id The Id of the ArenaBase.
 	 * @param loc The Main spawn location.
 	 */
 	public static void setMainSpawn(int id, Location loc) {

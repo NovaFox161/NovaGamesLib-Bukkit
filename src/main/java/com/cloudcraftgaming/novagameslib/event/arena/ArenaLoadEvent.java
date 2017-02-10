@@ -1,7 +1,6 @@
 package com.cloudcraftgaming.novagameslib.event.arena;
 
 import com.cloudcraftgaming.novagameslib.arena.ArenaBase;
-import com.cloudcraftgaming.novagameslib.arena.IArena;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -16,7 +15,7 @@ public class ArenaLoadEvent extends Event implements Cancellable {
 	private final Integer arenaId;
 	private final String gameName;
 
-	private IArena arena;
+	private ArenaBase arenaBase;
 
 	private Boolean letNovaGamesHandle;
 
@@ -26,8 +25,8 @@ public class ArenaLoadEvent extends Event implements Cancellable {
 	/**
 	 * Constructor for ArenaLoadEvent
 	 *
-	 * @param _arenaId The id of the arena to be loaded.
-	 * @param _gameName The name of the game for the specific arena.
+	 * @param _arenaId The id of the arenaBase to be loaded.
+	 * @param _gameName The name of the game for the specific arenaBase.
 	 */
 	public ArenaLoadEvent(Integer _arenaId, String _gameName) {
 		arenaId = _arenaId;
@@ -37,43 +36,43 @@ public class ArenaLoadEvent extends Event implements Cancellable {
 
 	/**
 	 * Constructor for ArenaLoadEvent.
-	 * @param _arena The ArenaObject to load.
+	 * @param _arenaBase The ArenaObject to load.
 	 */
-	public ArenaLoadEvent(IArena _arena) {
-		arenaId = _arena.getId();
-		gameName = _arena.getGameName();
-		arena = _arena;
+	public ArenaLoadEvent(ArenaBase _arenaBase) {
+		arenaId = _arenaBase.getId();
+		gameName = _arenaBase.getGameName();
+		arenaBase = _arenaBase;
 	}
 
 	/**
-	 * Gets the ID of the arena that will be loaded.
+	 * Gets the ID of the arenaBase that will be loaded.
 	 *
-	 * @return The ID of the arena that will be loaded.
+	 * @return The ID of the arenaBase that will be loaded.
 	 */
 	public Integer getArenaId() {
 		return arenaId;
 	}
 
 	/**
-	 * Gets the name of the game belonging to the arena.
-	 * @return The name of the game belonging to the arena.
+	 * Gets the name of the game belonging to the arenaBase.
+	 * @return The name of the game belonging to the arenaBase.
 	 */
 	public String getGameName() {
 		return gameName;
 	}
 
 	/**
-	 * Gets the Arena Object for this event.
+	 * Gets the ArenaBase Object for this event.
 	 * This may be null, it is suggested you check first!!!
-	 * @return The Arena Object for this event.
+	 * @return The ArenaBase Object for this event.
 	 */
-	public IArena getArena() {
-		return arena;
+	public ArenaBase getArenaBase() {
+		return arenaBase;
 	}
 
 	/**
-	 * Gets whether or not NovaGames will handle loading this arena, or if the specific minigames plugin will.
-	 * If not, NovaGames will simply 'load' or mark the arena as being loaded for OYAGames.
+	 * Gets whether or not NovaGames will handle loading this arenaBase, or if the specific minigames plugin will.
+	 * If not, NovaGames will simply 'load' or mark the arenaBase as being loaded for OYAGames.
 	 * This is <code>true</code> by default.
 	 * @return <code>true</code> if NovaGames is to handle loading, else <code>false</code>.
 	 */
@@ -91,17 +90,17 @@ public class ArenaLoadEvent extends Event implements Cancellable {
 	}
 
 	/**
-	 * Sets the Arena Object for this event.
+	 * Sets the ArenaBase Object for this event.
 	 * This is only needed if {@link #shouldLetNovaGamesHandle()} ()} is <code>false</code>.
-	 * @param _arena The Arena for this event.
+	 * @param _arenaBase The ArenaBase for this event.
 	 */
-	public void setArena(ArenaBase _arena) {
-		arena = _arena;
+	public void setArenaBase(ArenaBase _arenaBase) {
+		arenaBase = _arenaBase;
 	}
 
 	/**
-	 * Set whether or not NovaGames should handle the loading of the arena.
-	 * @param value Whether or not NovaGames should handle arena loading.
+	 * Set whether or not NovaGames should handle the loading of the arenaBase.
+	 * @param value Whether or not NovaGames should handle arenaBase loading.
 	 */
 	public void setLetNovaGameHandle(Boolean value) {
 		letNovaGamesHandle = value;

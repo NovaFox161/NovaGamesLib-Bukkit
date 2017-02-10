@@ -24,8 +24,8 @@ public class ArenaUnloadEvent extends Event implements Cancellable {
 
 	/**
 	 * Constructor for ArenaUnloadEvent
-	 * @param _arenaId The id of the arena to be unloaded.
-	 * @param _gameName The name of the game for the specific arena.
+	 * @param _arenaId The id of the arenaBase to be unloaded.
+	 * @param _gameName The name of the game for the specific arenaBase.
 	 */
 	public ArenaUnloadEvent(Integer _arenaId, String _gameName) {
 		arenaId = _arenaId;
@@ -44,34 +44,34 @@ public class ArenaUnloadEvent extends Event implements Cancellable {
 	}
 
 	/**
-	 * Gets the ID of the arena that will be unloaded.
+	 * Gets the ID of the arenaBase that will be unloaded.
 	 *
-	 * @return The ID of the arena that will be unloaded.
+	 * @return The ID of the arenaBase that will be unloaded.
 	 */
 	public Integer getArenaId() {
 		return arenaId;
 	}
 
 	/**
-	 * Gets the name of the game belonging to the arena.
-	 * @return The name of the game belonging to the arena.
+	 * Gets the name of the game belonging to the arenaBase.
+	 * @return The name of the game belonging to the arenaBase.
 	 */
 	public String getGameName() {
 		return gameName;
 	}
 
 	/**
-	 * Gets the Arena Object for this event.
+	 * Gets the ArenaBase Object for this event.
 	 * This may be null, it is suggested you check first!!!
-	 * @return The Arena Object for this event.
+	 * @return The ArenaBase Object for this event.
 	 */
 	public ArenaBase getArenaBase() {
 		return arenaBase;
 	}
 
 	/**
-	 * Gets whether or not NovaGames will handle unloading this arena, or if the specific minigames plugin will.
-	 * If not, NovaGames will simply 'unload' or mark the arena as being unloaded for NovaGames.
+	 * Gets whether or not NovaGames will handle unloading this arenaBase, or if the specific minigames plugin will.
+	 * If not, NovaGames will simply 'unload' or mark the arenaBase as being unloaded for NovaGames.
 	 * This is <code>true</code> by default.
 	 * @return <code>true</code> if NovaGames is to handle unloading, else <code>false</code>.
 	 */
@@ -89,17 +89,17 @@ public class ArenaUnloadEvent extends Event implements Cancellable {
 	}
 
 	/**
-	 * Sets the Arena Object for this event.
+	 * Sets the ArenaBase Object for this event.
 	 * This is only needed if {@link #shouldLetNovaGamesHandle()} is <code>false</code>.
-	 * @param _arenaBase The Arena for this event.
+	 * @param _arenaBase The ArenaBase for this event.
 	 */
 	public void setArenaBase(ArenaBase _arenaBase) {
 		arenaBase = _arenaBase;
 	}
 
 	/**
-	 * Set whether or not NovaGames should handle the unloading of the arena.
-	 * @param value Whether or not NovaGames should handle arena unloading.
+	 * Set whether or not NovaGames should handle the unloading of the arenaBase.
+	 * @param value Whether or not NovaGames should handle arenaBase unloading.
 	 */
 	public void setLetNovaGamesHandle(Boolean value) {
 		letNovaGamesHandle = value;
