@@ -1,11 +1,11 @@
 package com.cloudcraftgaming.novagameslib.internal.listener;
 
 import com.cloudcraftgaming.novagameslib.NovaGamesLib;
-import com.cloudcraftgaming.novagameslib.data.PlayerDataManager;
-import com.cloudcraftgaming.novagameslib.event.region.LocationOneSetEvent;
-import com.cloudcraftgaming.novagameslib.event.region.LocationTwoSetEvent;
-import com.cloudcraftgaming.novagameslib.game.MinigameEventHandler;
-import com.cloudcraftgaming.novagameslib.utils.SignUtils;
+import com.cloudcraftgaming.novagameslib.api.data.PlayerDataManager;
+import com.cloudcraftgaming.novagameslib.api.event.region.LocationOneSetEvent;
+import com.cloudcraftgaming.novagameslib.api.event.region.LocationTwoSetEvent;
+import com.cloudcraftgaming.novagameslib.api.game.MinigameEventHandler;
+import com.cloudcraftgaming.novagameslib.api.utils.SignUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Sign;

@@ -1,6 +1,6 @@
 package com.cloudcraftgaming.novagameslib.internal.listener;
 
-import com.cloudcraftgaming.novagameslib.data.PlayerDataManager;
+import com.cloudcraftgaming.novagameslib.api.data.PlayerDataManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

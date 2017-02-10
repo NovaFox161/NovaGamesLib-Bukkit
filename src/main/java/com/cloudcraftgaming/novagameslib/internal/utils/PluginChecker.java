@@ -1,7 +1,7 @@
 package com.cloudcraftgaming.novagameslib.internal.utils;
 
 import com.cloudcraftgaming.novagameslib.NovaGamesLib;
-import com.cloudcraftgaming.novagameslib.utils.FileManager;
+import com.cloudcraftgaming.novagameslib.api.utils.FileManager;
 
 /**
  * Created by Nova Fox on 11/23/2016.

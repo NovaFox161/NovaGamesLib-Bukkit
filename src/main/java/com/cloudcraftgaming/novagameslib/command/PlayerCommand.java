@@ -1,7 +1,7 @@
 package com.cloudcraftgaming.novagameslib.command;
 
-import com.cloudcraftgaming.novagameslib.game.MinigameEventHandler;
-import com.cloudcraftgaming.novagameslib.utils.MessageManager;
+import com.cloudcraftgaming.novagameslib.api.game.MinigameEventHandler;
+import com.cloudcraftgaming.novagameslib.api.utils.MessageManager;
 import org.bukkit.entity.Player;
 
 /**

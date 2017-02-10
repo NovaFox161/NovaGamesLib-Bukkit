@@ -1,8 +1,8 @@
 package com.cloudcraftgaming.novagameslib.internal.listener;
 
-import com.cloudcraftgaming.novagameslib.arena.ArenaBase;
-import com.cloudcraftgaming.novagameslib.arena.ArenaManager;
-import com.cloudcraftgaming.novagameslib.data.ArenaDataManager;
+import com.cloudcraftgaming.novagameslib.api.arena.ArenaBase;
+import com.cloudcraftgaming.novagameslib.api.arena.ArenaManager;
+import com.cloudcraftgaming.novagameslib.api.data.ArenaDataManager;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

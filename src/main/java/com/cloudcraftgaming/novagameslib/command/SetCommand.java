@@ -1,9 +1,9 @@
 package com.cloudcraftgaming.novagameslib.command;
 
-import com.cloudcraftgaming.novagameslib.data.ArenaDataManager;
-import com.cloudcraftgaming.novagameslib.data.PlayerDataManager;
-import com.cloudcraftgaming.novagameslib.team.Team;
-import com.cloudcraftgaming.novagameslib.utils.MessageManager;
+import com.cloudcraftgaming.novagameslib.api.data.ArenaDataManager;
+import com.cloudcraftgaming.novagameslib.api.data.PlayerDataManager;
+import com.cloudcraftgaming.novagameslib.api.team.Team;
+import com.cloudcraftgaming.novagameslib.api.utils.MessageManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;

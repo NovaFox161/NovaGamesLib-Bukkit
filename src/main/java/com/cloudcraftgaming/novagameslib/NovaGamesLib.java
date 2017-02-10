@@ -1,13 +1,13 @@
 package com.cloudcraftgaming.novagameslib;
 
-import com.cloudcraftgaming.novagameslib.arena.ArenaManager;
-import com.cloudcraftgaming.novagameslib.data.ArenaDataManager;
-import com.cloudcraftgaming.novagameslib.data.DataCache;
-import com.cloudcraftgaming.novagameslib.database.DatabaseManager;
+import com.cloudcraftgaming.novagameslib.api.arena.ArenaManager;
+import com.cloudcraftgaming.novagameslib.api.data.ArenaDataManager;
+import com.cloudcraftgaming.novagameslib.api.data.DataCache;
+import com.cloudcraftgaming.novagameslib.api.database.DatabaseManager;
+import com.cloudcraftgaming.novagameslib.api.utils.FileManager;
+import com.cloudcraftgaming.novagameslib.api.utils.MessageManager;
 import com.cloudcraftgaming.novagameslib.internal.listener.*;
 import com.cloudcraftgaming.novagameslib.internal.utils.PluginChecker;
-import com.cloudcraftgaming.novagameslib.utils.FileManager;
-import com.cloudcraftgaming.novagameslib.utils.MessageManager;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;

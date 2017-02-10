@@ -1,7 +1,7 @@
 package com.cloudcraftgaming.novagameslib.internal.listener;
 
 import com.cloudcraftgaming.novagameslib.NovaGamesLib;
-import com.cloudcraftgaming.novagameslib.utils.SignUtils;
+import com.cloudcraftgaming.novagameslib.api.utils.SignUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
