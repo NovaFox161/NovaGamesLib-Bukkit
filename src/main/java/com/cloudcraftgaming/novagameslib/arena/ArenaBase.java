@@ -176,7 +176,7 @@ public class ArenaBase {
 	 * Used when extending this class and needing to access this object directly.
 	 * @return The ArenaBase object.
 	 */
-	public ArenaBase getArena() {
+	public ArenaBase getArenaBase() {
 		return this;
 	}
 

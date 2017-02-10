@@ -9,10 +9,9 @@ import com.cloudcraftgaming.novagameslib.game.GameState;
 import com.cloudcraftgaming.novagameslib.utils.FileManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
-
-import static com.cloudcraftgaming.novagameslib.NovaGamesLib.plugin;
 
 /**
  * Created by Nova Fox on 11/17/16.
@@ -148,7 +147,7 @@ public class ArenaManager {
 				arenaBases.add(arenaBase);
 				//ArenaDataManager.updateArenaInfo(arenaBase.getId());
 				if (FileManager.verbose()) {
-					plugin.getLogger().info("Loaded arenaBase " + arenaBase.getId());
+					NovaGamesLib.plugin.getLogger().info("Loaded arena " + arenaBase.getId());
 				}
 				return true;
 			}
@@ -180,7 +179,7 @@ public class ArenaManager {
 							arenaBases.add(arenaBase);
 							//ArenaDataManager.updateArenaInfo(id);
 							if (FileManager.verbose()) {
-								plugin.getLogger().info("Loaded arenaBase " + id);
+								NovaGamesLib.plugin.getLogger().info("Loaded arena " + id);
 							}
 							return true;
 						} else {
@@ -189,13 +188,30 @@ public class ArenaManager {
 							}
 							//ArenaDataManager.updateArenaInfo(id);
 							if (FileManager.verbose()) {
-								plugin.getLogger().info("Loaded arena " + id);
+								NovaGamesLib.plugin.getLogger().info("Loaded arena " + id);
 							}
 							return true;
 						}
 					}
 				}
 			}
+		}
+		return false;
+	}
+
+	/**
+	 * Marks an arena as loaded by another plugin.
+	 * <br> </br>
+	 * This will <b>NOT</b> call {@link ArenaLoadEvent}!!!
+	 * @param arena The arena to mark as loaded.
+	 * @param plugin The plugin that arena was loaded by.
+	 * @return <code>true</code> if successful, else <code>false</code>.
+	 */
+	public Boolean loadArena(ArenaBase arena, Plugin plugin) {
+		if (!arenaLoaded(arena.getId())) {
+			arenaBases.add(arena);
+			NovaGamesLib.plugin.getLogger().info("Arena loaded by " + plugin.getDescription().getName());
+			return true;
 		}
 		return false;
 	}
@@ -217,7 +233,7 @@ public class ArenaManager {
 				arenaBases.remove(arenaBase);
 				//ArenaDataManager.updateArenaInfo(arenaBase.getId());
 				if (FileManager.verbose()) {
-					plugin.getLogger().info("Unloaded arenaBase " + arenaBase.getId());
+					NovaGamesLib.plugin.getLogger().info("Unloaded arenaBase " + arenaBase.getId());
 				}
 				return true;
 			}
@@ -242,7 +258,7 @@ public class ArenaManager {
 					arenaBases.remove(arenaBase);
 					//ArenaDataManager.updateArenaInfo(id);
 					if (FileManager.verbose()) {
-						plugin.getLogger().info("Unloaded arenaBase " + id);
+						NovaGamesLib.plugin.getLogger().info("Unloaded arenaBase " + id);
 					}
 					return true;
 				} else {
