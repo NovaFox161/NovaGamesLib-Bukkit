@@ -12,13 +12,13 @@ Looking for NovaGamesLib for Bungee Servers? Don't worry! It's in development!
 - Robust API for minigames to be built against
 - Can handle almost all minigame types.
 - Create teams, goals, functions, and more.
-- Advanced arenaBase regeneration support
-- Fully automated system to offer built in arenaBase restarts.
+- Advanced arena regeneration support
+- Fully automated system to offer built in arena restarts.
 - Built in kit system/handling (with support for custom names and enchantments).
 - Advanced scoreboard API with support for scoreboard animations.
 - Built in support for join/quit/spectate signs.
 - Enderchest backup support (player inventory backup support coming soon)
-- Player minigame stats tracking (All stored in the database), per minigame.
+- Player minigame stats tracking (All stored in a MySQL database), per minigame.
 - Handling of joining/quiting games
 - Tons of custom events for you to listen to to control the game and the player. No longer do you need to implement tons of code for something simple, just listen to an NGL event. In fact, NGL events are just like Bukkit events!!!
 - Fully fledged timer API for controlling wait delays, start delays, game length, and more.
@@ -45,6 +45,9 @@ NGL currently tracks all of the following stats:
 - Total games played
 
 ##Planned and In-Progress Features
+- Game goals and their functions
+- Game Types and their functions
+- CtF and Flag creation, support, and functionality.
 - Player inventory back up (with exp saving)
 - Arena GUI selector
 - Kit GUI selector
@@ -52,6 +55,9 @@ NGL currently tracks all of the following stats:
 
 ##Issues
 Should you find an issue with NovaGamesLib, please create a new issue in the Issues pages on this repository or via Dev Bukkit with a proper ticket.
+
+## Plugins Using NovaGamesLib
+Add your plugin below or send us a DM letting us know about your awesome new Minigame plugin that utilizes NovaGamesLib!
 
 ##Use in Your Minigame Plugin
 Implementing NGL is super simple!
@@ -103,5 +109,9 @@ Example code, plugins, and more will soon be provided here.
 3. Commit your changes and push to your fork `git push origin master`
 4. Create a new pull request and submit it back to us!
 
-## Plugins Using NovaGamesLib
-Add your plugin below or send us a DM letting us know about your awesome new Minigame plugin that utilizes NovaGamesLib!
+### Deprecation Policy
+Due to the way NovaGamesLib-Bukkit is built, the deprecation policy is as follows:
+- For Alpha and Beta builds, deprecation may not follow this policy.
+- Methods will be marked as deprecated and link to the suggested alternative. These methods will exist until the next Major update (x.y.y). All major versions will be compatible with minor and patch versions under the major.
+- Class deprecation will follow the same format as method deprecation.
+- All other deprecation is to be handled on a case by case basis.
