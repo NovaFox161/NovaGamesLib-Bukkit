@@ -12,8 +12,8 @@ Looking for NovaGamesLib for Bungee Servers? Don't worry! It's in development!
 - Robust API for minigames to be built against
 - Can handle almost all minigame types.
 - Create teams, goals, functions, and more.
-- Advanced arena regeneration support
-- Fully automated system to offer built in arena restarts.
+- Advanced arenaBase regeneration support
+- Fully automated system to offer built in arenaBase restarts.
 - Built in kit system/handling (with support for custom names and enchantments).
 - Advanced scoreboard API with support for scoreboard animations.
 - Built in support for join/quit/spectate signs.

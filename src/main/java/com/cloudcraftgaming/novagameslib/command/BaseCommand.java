@@ -1,6 +1,6 @@
 package com.cloudcraftgaming.novagameslib.command;
 
-import com.cloudcraftgaming.novagameslib.utils.MessageManager;
+import com.cloudcraftgaming.novagameslib.api.utils.MessageManager;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

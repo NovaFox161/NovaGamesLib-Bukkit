@@ -1,7 +1,7 @@
 package com.cloudcraftgaming.novagameslib.command;
 
-import com.cloudcraftgaming.novagameslib.game.MinigameEventHandler;
-import com.cloudcraftgaming.novagameslib.utils.MessageManager;
+import com.cloudcraftgaming.novagameslib.api.game.MinigameEventHandler;
+import com.cloudcraftgaming.novagameslib.api.utils.MessageManager;
 import org.bukkit.entity.Player;
 
 /**
@@ -50,7 +50,7 @@ public class PlayerCommand {
                     player.sendMessage(MessageManager.getMessage("Notifications.Args.Invalid"));
                 }
             } catch (NumberFormatException e) {
-                player.sendMessage(MessageManager.getMessage("Notifications.Int.Arena"));
+                player.sendMessage(MessageManager.getMessage("Notifications.Int.ArenaBase"));
             }
         } else if (args.length > 2) {
             player.sendMessage(MessageManager.getMessage("Notifications.Args.Many"));
