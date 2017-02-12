@@ -35,6 +35,11 @@
             <id>vault-repo</id>
             <url>http://nexus.hc.to/content/repositories/pub_releases</url>
         </repository>
+        <!--ArsenArsen Updater Repo-->
+        <repository>
+            <id>arsens-repo</id>
+            <url>https://repo.arsenarsen.com/content/repositories/snapshots/</url>
+        </repository>
     </repositories>
     <dependencies>
         <!--Bukkit API-->
@@ -50,6 +55,7 @@
             <groupId>com.github.NovaFox161</groupId>
             <artifactId>PerWorldChatPlus</artifactId>
             <version>5.0.1</version>
+            <scope>provided</scope>
         </dependency>
         <!--Vault API-->
         <dependency>
@@ -58,11 +64,18 @@
             <version>1.6</version>
             <scope>provided</scope>
         </dependency>
+        <!--ArsenArsen Updater API-->
+        <dependency>
+            <groupId>com.arsenarsen</groupId>
+            <artifactId>updater</artifactId>
+            <version>1.1.6-R0.1-SNAPSHOT</version>
+        </dependency>
         <!--Jetbrains Annotations-->
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations-java5</artifactId>
             <version>RELEASE</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

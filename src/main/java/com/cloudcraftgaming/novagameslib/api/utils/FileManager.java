@@ -30,6 +30,7 @@ public class FileManager {
             plugin.getConfig().addDefault("DO NOT DELETE.B", "This plugin is an API and is useless on its own!");
             plugin.getConfig().addDefault("Config Version", conVersion);
             plugin.getConfig().addDefault("Check for Updates", true);
+            plugin.getConfig().addDefault("Download Updates", false);
             plugin.getConfig().addDefault("Language", "English");
             plugin.getConfig().addDefault("Console.Verbose", true);
             plugin.getConfig().addDefault("Console.Debug", false);

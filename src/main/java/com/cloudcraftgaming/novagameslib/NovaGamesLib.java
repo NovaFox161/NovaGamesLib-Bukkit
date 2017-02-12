@@ -8,6 +8,7 @@ import com.cloudcraftgaming.novagameslib.api.utils.FileManager;
 import com.cloudcraftgaming.novagameslib.api.utils.MessageManager;
 import com.cloudcraftgaming.novagameslib.internal.listener.*;
 import com.cloudcraftgaming.novagameslib.internal.utils.PluginChecker;
+import com.cloudcraftgaming.novagameslib.internal.utils.UpdateChecker;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -60,10 +61,20 @@ public class NovaGamesLib extends JavaPlugin {
         DatabaseManager.getManager().init();
 
         //Finally do a few more things.
+        checkUpdatesOnStart();
         PluginChecker.checkForPerWorldChatPlus();
         setupEconomy();
 
         loadArenasStartup();
+    }
+
+    private void checkUpdatesOnStart() {
+        Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+            @Override
+            public void run() {
+                UpdateChecker.checkForUpdates();
+            }
+        }, 20L);
     }
 
     private void loadArenasStartup() {
