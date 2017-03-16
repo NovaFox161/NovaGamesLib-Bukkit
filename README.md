@@ -1,4 +1,7 @@
 #NovaGamesLib
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/21cfa539a1474f59a53c7c15db9d738c)](https://www.codacy.com/app/NovaFox161/NovaGamesLib-Bukkit?utm_source=github.com&utm_medium=referral&utm_content=NovaFox161/NovaGamesLib-Bukkit&utm_campaign=badger)
+
 ##About
 NovaGamesLib (Bukkit) is a version of the NovaGamesLib plugin which serves as a robust API for minigames on Bukkit and Spigot minecraft servers.
 
