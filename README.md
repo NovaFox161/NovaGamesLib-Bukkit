@@ -1,8 +1,9 @@
+# NovaGamesLib
+
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/21cfa539a1474f59a53c7c15db9d738c)](https://www.codacy.com/app/NovaFox161/NovaGamesLib-Bukkit?utm_source=github.com&utm_medium=referral&utm_content=NovaFox161/NovaGamesLib-Bukkit&utm_campaign=badger)
 [![CircleCI](https://circleci.com/gh/NovaFox161/NovaGamesLib-Bukkit.svg?style=svg)](https://circleci.com/gh/NovaFox161/NovaGamesLib-Bukkit)
 
-#NovaGamesLib
-##About
+## About
 NovaGamesLib (Bukkit) is a version of the NovaGamesLib plugin which serves as a robust API for minigames on Bukkit and Spigot minecraft servers.
 
 This plugin offers an extensive API and library for Bukkit minigame plugins. NGL handles all of the hard work involved in minigame coding, no longer do you need to spend months on end trying to code a minigame. NGL is designed to be used in any kind of minigame.
@@ -11,7 +12,7 @@ NGL is completely modular too! Don't want to use something? No problem, just don
 
 Looking for NovaGamesLib for Bungee Servers? Don't worry! It's in development!
 
-##Current Features
+## Current Features
 - Robust API for minigames to be built against
 - Can handle almost all minigame types.
 - Create teams, goals, functions, and more.
@@ -28,7 +29,7 @@ Looking for NovaGamesLib for Bungee Servers? Don't worry! It's in development!
 - Built in rewards handling!! Economy through the Vault API and items (lore and custom values supported!)!!! NGL will cover the tough work for you! Just listen to the events and edit the values as needed, NGL will handle the rest.
 - And much much more!!
 
-###Stats Tracking
+### Stats Tracking
 NovaGamesLib will handle all stats tracking by default if a database is set up reducing your workload. 
  
 NGL handles all stats tracking internally! That means that you need not worry about it!!
@@ -47,7 +48,7 @@ NGL currently tracks all of the following stats:
 - Loses
 - Total games played
 
-##Planned and In-Progress Features
+## Planned and In-Progress Features
 - Game goals and their functions
 - Game Types and their functions
 - CtF and Flag creation, support, and functionality.
@@ -56,16 +57,16 @@ NGL currently tracks all of the following stats:
 - Kit GUI selector
 - And more.
 
-##Issues
+## Issues
 Should you find an issue with NovaGamesLib, please create a new issue in the Issues pages on this repository or via Dev Bukkit with a proper ticket.
 
 ## Plugins Using NovaGamesLib
 Add your plugin below or send us a DM letting us know about your awesome new Minigame plugin that utilizes NovaGamesLib!
 
-##Use in Your Minigame Plugin
+## Use in Your Minigame Plugin
 Implementing NGL is super simple!
 Directions on how to use it are provided below (currently only Maven is supported).
-###Maven
+### Maven
 1. Import into pom.xml by inserting the following (where version is your target version):
     ```xml
        <repository>
@@ -103,7 +104,7 @@ Directions on how to use it are provided below (currently only Maven is supporte
     ```
 4. And now you can start using NGL in your plugin. Just check the Javadoc for extra help!
    
-###Examples and Tutorials
+### Examples and Tutorials
 Example code, plugins, and more will soon be provided here.
 
 ## Contributing
