@@ -115,14 +115,25 @@ public class DatabaseManager {
                         return true;
                     } else {
                         //Stats saved, update.
-                        String updateCommand = "UPDATE " + playerStatsTableName +
-                                " SET TOTAL_KILLS='" + stats.getTotalKills() + "', TOTAL_DEATHS='" + stats.getTotalDeaths() +
-                                "', TOTAL_SCORED='" + stats.getTotalScored() + "', MOST_KILLS='" + stats.getMostKills() +
-                                "', MOST_DEATHS='" + stats.getMostDeaths() + "', MOST_SCORED='" + stats.getMostScored() +
-                                "', LEAST_DEATHS='" + stats.getLeastDeaths() + "', WINS='" + stats.getWins() +
-                                "', LOSES='" + stats.getLoses() + "', TIMES_PLAYED='" + stats.getTimesPlayed() +
-                                "' WHERE (PLAYER_UUID='" + stats.getPlayerUUID().toString() + "' AND GAME_NAME='" + stats.getGameName() + "');";
-                        statement.executeUpdate(updateCommand);
+                        String updateCommand = "UPDATE " + playerStatsTableName + " SET TOTAL_KILLS= ?, TOTAL_DEATHS= ?, TOTAL_SCORED= ?," +
+                                " MOST_KILLS=?, MOST_DEATHS=?, MOST_SCORED=?, LEAST_DEATHS=?," +
+                                " WINS=?, LOSES=?, TIMES_PLAYED=? WHERE (PLAYER_UUID=? AND GAME_NAME=?);";
+                        PreparedStatement ps = databaseInfo.getConnection().prepareStatement(updateCommand);
+
+                        ps.setInt(1, stats.getTotalKills());
+                        ps.setInt(2, stats.getTotalDeaths());
+                        ps.setInt(3, stats.getTotalScored());
+                        ps.setInt(4, stats.getMostKills());
+                        ps.setInt(5, stats.getMostDeaths());
+                        ps.setInt(6, stats.getMostScored());
+                        ps.setInt(7, stats.getLeastDeaths());
+                        ps.setInt(8, stats.getWins());
+                        ps.setInt(9, stats.getLoses());
+                        ps.setInt(10, stats.getTimesPlayed());
+                        ps.setString(11, stats.getPlayerUUID().toString());
+                        ps.setString(12, stats.getGameName());
+
+                        ps.execute();
                         statement.close();
                         return true;
                     }
